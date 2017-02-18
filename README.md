@@ -55,12 +55,18 @@ player.on('playing', () => {
 
 ## API
 
-### `player = new Player(selector)`
+### `player = new Player(selector, [opts])`
 
 Create a new YouTube player at the DOM node matched by `selector`. Alternatively,
 `selector` can be an instance of `HTMLElement` (i.e. a DOM node).
 
 Examples: `#player`, `.youtube-player`, or a DOM node.
+
+Optionally, provide an options object `opts` that will be passed into the
+`YT.Player` constructor.
+
+See: [`YT.Player` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
+and [Player parameters (`opts.playerVars`)](https://developers.google.com/youtube/player_parameters#Parameters).
 
 ### `player.load(videoId)`
 
@@ -117,22 +123,27 @@ Returns the elapsed time in seconds since the video started playing.
 Returns the state of the player. Possible values are:
 
 – `'unstarted'`
+
 – `'ended'`
+
 – `'playing'`
+
 – `'paused'`
+
 – `'buffering'`
+
 – `'cued'`
 
 ### `player.destroy()`
 
 Removes the `<iframe>` containing the player and cleans up all resources.
 
-### event: `player.on('error', (err) => {})`
+### `player.on('error', (err) => {})`
 
 This event fires if a fatal error occurs in the player. This does not include
 videos that fail to play, for whatever reason.
 
-### event: `player.on('unplayable', (videoId) => {})`
+### `player.on('unplayable', (videoId) => {})`
 
 This event fires if the YouTube player cannot play the given video. This is not a
 fatal error. This event is reported separately from the `'error'` event so
@@ -149,31 +160,31 @@ Possible reasons for this error:
 - The request contains an invalid parameter value. For example, this error occurs
   if you specify a videoId that does not have 11 characters, or if the videoId contains invalid characters, such as exclamation points or asterisks.
 
-### event: `player.on('timeupdate', (seconds) => {})`
+### `player.on('timeupdate', (seconds) => {})`
 
 This event fires when the time indicated by the `getCurrentTime()` method has been
 updated.
 
-### event: `player.on('unstarted', () => {})`
-### event: `player.on('ended', () => {})`
-### event: `player.on('playing', () => {})`
-### event: `player.on('paused', () => {})`
-### event: `player.on('buffering', () => {})`
-### event: `player.on('cued', () => {})`
+### `player.on('unstarted', () => {})`
+### `player.on('ended', () => {})`
+### `player.on('playing', () => {})`
+### `player.on('paused', () => {})`
+### `player.on('buffering', () => {})`
+### `player.on('cued', () => {})`
 
 These events fire when the player enters the respective state. These event names
 are the same as the possible return values from `player.getState()`.
 
-### event: `player.on('playbackQualityChange', (quality) => {})`
+### `player.on('playbackQualityChange', (quality) => {})`
 
 This event fires whenever the video playback quality changes. Possible
 values are: 'small', 'medium', 'large', 'hd720', 'hd1080', 'highres'.
 
-### event: `player.on('playbackRateChange', (playbackRate) => {})`
+### `player.on('playbackRateChange', (playbackRate) => {})`
 
 This event fires whenever the video playback rate changes.
 
-### event: `player.on('apiChange', () => {})`
+### `player.on('apiChange', () => {})`
 
 This event is fired to indicate that the player has loaded (or unloaded) a module
 with exposed API methods.

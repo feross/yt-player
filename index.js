@@ -80,12 +80,14 @@ const loadIframeAPI = thunky((cb) => {
  * @param {selector|HTMLElement} node
  */
 class YouTubePlayer extends EventEmitter {
-  constructor (node) {
+  constructor (selector, opts) {
     super()
 
-    this.node = typeof node === 'string'
-      ? document.querySelector(node)
-      : node
+    this._opts = opts || {}
+
+    this.node = typeof selector === 'string'
+      ? document.querySelector(selector)
+      : selector
 
     this.videoId = null
     this.destroyed = false
@@ -220,6 +222,8 @@ class YouTubePlayer extends EventEmitter {
       this._player.destroy()
     }
 
+    this._opts = null
+
     this.node = null
     this.videoId = null
 
@@ -258,9 +262,9 @@ class YouTubePlayer extends EventEmitter {
   _createPlayer (videoId) {
     if (this.destroyed) return
 
-    this._player = new this._api.Player(this.node, {
-      width: window.innerWidth || 1440,
-      height: window.innerHeight || 900,
+    const opts = Object.assign({
+      width: 640,
+      height: 360,
       videoId: videoId,
       playerVars: {
         // This parameter specifies whether the initial video will automatically
@@ -355,7 +359,8 @@ class YouTubePlayer extends EventEmitter {
         // (Not part of documented API) Allow html elements with higher z-index
         // to be shown on top of the YouTube player.
         wmode: 'opaque'
-      },
+      }
+    }, this._opts, {
       events: {
         onReady: () => this._onReady(videoId),
         onStateChange: (data) => this._onStateChange(data),
@@ -365,6 +370,8 @@ class YouTubePlayer extends EventEmitter {
         onApiChange: () => this._onApiChange()
       }
     })
+
+    this._player = new this._api.Player(this.node, opts)
   }
 
   /**
