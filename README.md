@@ -120,19 +120,8 @@ Returns the elapsed time in seconds since the video started playing.
 
 ### `player.getState()`
 
-Returns the state of the player. Possible values are:
-
-– `'unstarted'`
-
-– `'ended'`
-
-– `'playing'`
-
-– `'paused'`
-
-– `'buffering'`
-
-– `'cued'`
+Returns the state of the player. Possible values are: `'unstarted'`, `'ended'`,
+`'playing'`, `'paused'`, `'buffering'`, or `'cued'`.
 
 ### `player.destroy()`
 
