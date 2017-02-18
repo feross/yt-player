@@ -17,7 +17,7 @@ npm install yt-player
 
 ## Why this package?
 
-Most of the existing YouTube API packages on npm are incomplete or overcomplicated.
+Most of the existing YouTube API packages on npm are incomplete or overcomplicated. Try to keep things simple. Less is more.
 
 ### Features
 
