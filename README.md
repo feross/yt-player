@@ -31,7 +31,7 @@ trying so hard. Less is more.
   - Lightweight - only a single, small dependency
   - Extremely fast time-to-first-frame
     - YouTube IFrame API `<script>` is automatically loaded on first use
-    - For even faster start time, add `<script src='https://www.youtube.com/iframe_api'></script>` to your page
+    - For even faster start time, add `<script src='https://www.youtube.com/iframe_api' async></script>` to your page
     - Automatically detects the presence of the API `<script>` so API is never loaded twice
   - API commands are automatically queued (until both the Iframe API and Player instance are ready)
   - Differentiate between *fatal* errors and *unplayable video* errors
