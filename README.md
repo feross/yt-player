@@ -37,7 +37,8 @@ trying so hard. Less is more.
   - Differentiate between *fatal* errors and *unplayable video* errors
   - Adds the all-important 'timeupdate' event, which the YouTube API lacks
   - Well-commented codebase makes it easy to understand what's going on
-  - No promises, babel, async-await, large runtime dependencies, or pointless code.
+  - No promises, babel, async-await, large runtime dependencies, or pointless code
+  - Note: no support for old browsers (e.g. IE11 and below)
 
 ## Usage
 
