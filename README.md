@@ -17,13 +17,7 @@ npm install yt-player
 
 ## Why this package?
 
-Most of the existing YouTube API packages on npm are incomplete or overcomplicated.
-
-Note: If you publish a package that requires all of `babel-runtime`, `lodash`, and
-20KB of crap to do a simple task, you're an irresponsible programmer. Using lots of
-fancy dependencies doesn't make you a better programmer, and it's certainly not a
-"best practice" to ship tons of extra code to your website visitors. Please stop
-trying so hard. Less is more.
+Most of the existing YouTube API packages on npm are incomplete or overcomplicated. Try to keep things simple. Less is more.
 
 ### Features
 
