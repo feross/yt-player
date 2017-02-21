@@ -25,7 +25,7 @@ Using fancy dependencies doesn't make you a better programmer, and it's certainl
 not a "best practice" to ship tons of extra code to your website visitors. Less is
 more. 🔥
 
-### Features
+## Features
 
   - Powered by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
   - Lightweight - only 2.89kb gzipped and minified!
