@@ -1,9 +1,8 @@
 const EventEmitter = require('events').EventEmitter
-const loadScript = require('load-script')
-const thunky = require('thunky')
+const loadScript = require('load-script2')
 
 const TIMEUPDATE_INTERVAL = 250
-const YOUTUBE_IFRAME_API = 'https://www.youtube.com/iframe_api'
+const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
 const YOUTUBE_STATES = {
   '-1': 'unstarted',
@@ -38,7 +37,7 @@ const YOUTUBE_ERROR = {
 
 const loadIframeAPICallbacks = []
 
-const loadIframeAPI = thunky((cb) => {
+function loadIframeAPI (cb) {
   // If API is loaded, there is nothing else to do
   if (window.YT && typeof window.YT.Player === 'function') {
     return cb(null, window.YT)
@@ -48,13 +47,13 @@ const loadIframeAPI = thunky((cb) => {
   loadIframeAPICallbacks.push(cb)
 
   const scripts = Array.from(document.getElementsByTagName('script'))
-  const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API)
+  const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API_SRC)
 
   // If API <script> tag is not present in the page, inject it. Ensures that
   // if user includes a hardcoded <script> tag in HTML for performance, another
   // one will not be added
   if (!isLoading) {
-    loadScript(YOUTUBE_IFRAME_API, (err) => {
+    loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
       if (err) {
         while (loadIframeAPICallbacks.length) {
           const loadCb = loadIframeAPICallbacks.shift()
@@ -73,7 +72,7 @@ const loadIframeAPI = thunky((cb) => {
       }
     }
   }
-})
+}
 
 /**
  * YouTube Player. Exposes a better API, with nicer events.

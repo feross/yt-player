@@ -28,7 +28,7 @@ trying so hard. Less is more.
 ### Features
 
   - Powered by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
-  - Lightweight - only a single, small dependency
+  - Lightweight - only 2.89kb gzipped and minified!
   - Extremely fast time-to-first-frame
     - YouTube IFrame API `<script>` is automatically loaded on first use
     - For even faster start time, add `<script src='https://www.youtube.com/iframe_api' async></script>` to your page
