@@ -1,7 +1,6 @@
 const EventEmitter = require('events').EventEmitter
 const loadScript = require('load-script2')
 
-const TIMEUPDATE_INTERVAL = 250
 const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
 const YOUTUBE_STATES = {
@@ -35,45 +34,6 @@ const YOUTUBE_ERROR = {
   UNPLAYABLE_2: 150
 }
 
-const loadIframeAPICallbacks = []
-
-function loadIframeAPI (cb) {
-  // If API is loaded, there is nothing else to do
-  if (window.YT && typeof window.YT.Player === 'function') {
-    return cb(null, window.YT)
-  }
-
-  // Otherwise, queue callback until API is loaded
-  loadIframeAPICallbacks.push(cb)
-
-  const scripts = Array.from(document.getElementsByTagName('script'))
-  const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API_SRC)
-
-  // If API <script> tag is not present in the page, inject it. Ensures that
-  // if user includes a hardcoded <script> tag in HTML for performance, another
-  // one will not be added
-  if (!isLoading) {
-    loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
-      if (err) {
-        while (loadIframeAPICallbacks.length) {
-          const loadCb = loadIframeAPICallbacks.shift()
-          loadCb(err)
-        }
-      }
-    })
-  }
-
-  // If ready function is not present, create it
-  if (typeof window.onYouTubeIframeAPIReady !== 'function') {
-    window.onYouTubeIframeAPIReady = () => {
-      while (loadIframeAPICallbacks.length) {
-        const loadCb = loadIframeAPICallbacks.shift()
-        loadCb(null, window.YT)
-      }
-    }
-  }
-}
-
 /**
  * YouTube Player. Exposes a better API, with nicer events.
  * @param {selector|HTMLElement} node
@@ -82,11 +42,22 @@ class YouTubePlayer extends EventEmitter {
   constructor (selector, opts) {
     super()
 
-    this._opts = opts || {}
-
     this.node = typeof selector === 'string'
       ? document.querySelector(selector)
       : selector
+
+    this._opts = Object.assign({
+      autoplay: false,
+      captions: undefined,
+      controls: true,
+      keyboard: true,
+      fullscreen: true,
+      annotations: true,
+      modestBranding: false,
+      related: true,
+      info: true,
+      timeupdateFrequency: 1000
+    }, opts)
 
     this.videoId = null
     this.destroyed = false
@@ -261,29 +232,24 @@ class YouTubePlayer extends EventEmitter {
   _createPlayer (videoId) {
     if (this.destroyed) return
 
-    const opts = Object.assign({
-      width: 640,
-      height: 360,
+    const opts = this._opts
+
+    this._player = new this._api.Player(this.node, {
+      width: opts.width || 640,
+      height: opts.height || 360,
       videoId: videoId,
       playerVars: {
         // This parameter specifies whether the initial video will automatically
         // start to play when the player loads. Supported values are 0 or 1. The
         // default value is 0.
-        autoplay: 1,
+        autoplay: opts.autoplay ? 1 : 0,
 
         // Setting the parameter's value to 1 causes closed captions to be shown
         // by default, even if the user has turned captions off. The default
         // behavior is based on user preference.
-        cc_load_policy: 1,
-
-        // This parameter specifies the color that will be used in the player's
-        // video progress bar to highlight the amount of the video that the
-        // viewer has already seen. Valid parameter values are red and white,
-        // and, by default, the player uses the color red in the video progress
-        // bar. See the YouTube API blog for more information about color
-        // options. Note: Setting the color parameter to white will disable the
-        // modestbranding option.
-        color: 'red',
+        cc_load_policy: opts.captions != null
+          ? opts.captions ? 1 : 0
+          : undefined, // default to not setting this option
 
         // This parameter indicates whether the video player controls are
         // displayed. For IFrame embeds that load a Flash player, it also defines
@@ -297,12 +263,12 @@ class YouTubePlayer extends EventEmitter {
         //   - controls=2 – Player controls display in the player. For IFrame
         //                  embeds, the controls display and the Flash player
         //                  loads after the user initiates the video playback.
-        controls: 0,
+        controls: opts.controls ? 2 : 0,
 
         // Setting the parameter's value to 1 causes the player to not respond to
         // keyboard controls. The default value is 0, which means that keyboard
         // controls are enabled.
-        disablekb: 1,
+        disablekb: opts.keyboard ? 0 : 1,
 
         //  Setting the parameter's value to 1 enables the player to be
         //  controlled via IFrame or JavaScript Player API calls. The default
@@ -313,12 +279,12 @@ class YouTubePlayer extends EventEmitter {
         // Setting this parameter to 0 prevents the fullscreen button from
         // displaying in the player. The default value is 1, which causes the
         // fullscreen button to display.
-        fs: 0,
+        fs: opts.fullscreen ? 1 : 0,
 
         // Setting the parameter's value to 1 causes video annotations to be
         // shown by default, whereas setting to 3 causes video annotations to not
         // be shown by default. The default value is 1.
-        iv_load_policy: 3,
+        iv_load_policy: opts.annotations ? 1 : 3,
 
         // This parameter lets you use a YouTube player that does not show a
         // YouTube logo. Set the parameter value to 1 to prevent the YouTube logo
@@ -344,7 +310,7 @@ class YouTubePlayer extends EventEmitter {
         // This parameter indicates whether the player should show related videos
         // when playback of the initial video ends. Supported values are 0 and 1.
         // The default value is 1.
-        rel: 0,
+        rel: opts.related ? 1 : 0,
 
         // Supported values are 0 and 1. Setting the parameter's value to 0
         // causes the player to not display information like the video title and
@@ -353,24 +319,20 @@ class YouTubePlayer extends EventEmitter {
         // loading, the player will also display thumbnail images for the videos
         // in the playlist. Note that this functionality is only supported for
         // the AS3 player.
-        showinfo: 0,
+        showinfo: opts.info ? 1 : 0,
 
         // (Not part of documented API) Allow html elements with higher z-index
         // to be shown on top of the YouTube player.
         wmode: 'opaque'
-      }
-    }, this._opts, {
+      },
       events: {
         onReady: () => this._onReady(videoId),
         onStateChange: (data) => this._onStateChange(data),
         onPlaybackQualityChange: (data) => this._onPlaybackQualityChange(data),
         onPlaybackRateChange: (data) => this._onPlaybackRateChange(data),
-        onError: (data) => this._onError(data),
-        onApiChange: () => this._onApiChange()
+        onError: (data) => this._onError(data)
       }
     })
-
-    this._player = new this._api.Player(this.node, opts)
   }
 
   /**
@@ -452,15 +414,6 @@ class YouTubePlayer extends EventEmitter {
   }
 
   /**
-   * This event is fired to indicate that the player has loaded (or unloaded) a
-   * module with exposed API methods.
-   */
-  _onApiChange () {
-    if (this.destroyed) return
-    this.emit('apiChange')
-  }
-
-  /**
    * This event fires when the time indicated by the `getCurrentTime()` method
    * has been updated.
    */
@@ -469,13 +422,52 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _startInterval () {
-    this._interval = setInterval(() => this._onTimeupdate(), TIMEUPDATE_INTERVAL)
+    this._interval = setInterval(() => this._onTimeupdate(), this._opts.timeupdateFrequency)
     this._onTimeupdate()
   }
 
   _stopInterval () {
     clearInterval(this._interval)
     this._interval = null
+  }
+}
+
+const loadIframeAPICallbacks = []
+
+function loadIframeAPI (cb) {
+  // If API is loaded, there is nothing else to do
+  if (window.YT && typeof window.YT.Player === 'function') {
+    return cb(null, window.YT)
+  }
+
+  // Otherwise, queue callback until API is loaded
+  loadIframeAPICallbacks.push(cb)
+
+  const scripts = Array.from(document.getElementsByTagName('script'))
+  const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API_SRC)
+
+  // If API <script> tag is not present in the page, inject it. Ensures that
+  // if user includes a hardcoded <script> tag in HTML for performance, another
+  // one will not be added
+  if (!isLoading) {
+    loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
+      if (err) {
+        while (loadIframeAPICallbacks.length) {
+          const loadCb = loadIframeAPICallbacks.shift()
+          loadCb(err)
+        }
+      }
+    })
+  }
+
+  // If ready function is not present, create it
+  if (typeof window.onYouTubeIframeAPIReady !== 'function') {
+    window.onYouTubeIframeAPIReady = () => {
+      while (loadIframeAPICallbacks.length) {
+        const loadCb = loadIframeAPICallbacks.shift()
+        loadCb(null, window.YT)
+      }
+    }
   }
 }
 

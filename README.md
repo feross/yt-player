@@ -63,11 +63,73 @@ Create a new YouTube player at the DOM node matched by `selector`. Alternatively
 
 Examples: `#player`, `.youtube-player`, or a DOM node.
 
-Optionally, provide an options object `opts` that will be passed into the
-`YT.Player` constructor.
+Optionally, provide an options object `opts` to customize the player.
 
-See: [`YT.Player` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
-and [Player parameters (`opts.playerVars`)](https://developers.google.com/youtube/player_parameters#Parameters).
+#### `opts.width` (number)
+
+This parameter indicates the width of the player.
+
+#### `opts.height` (number)
+
+This parameter indicates the height of the player.
+
+#### `opts.autoplay` (boolean)
+
+This parameter indicates whether the initial video will automatically start to play
+when the player loads. The default value is `false`.
+
+#### `opts.captions` (boolean)
+
+This parameter indicates whether closed captions should be shown, even if the user
+has turned captions off. The default behavior is based on user preference.
+
+#### `opts.controls` (boolean)
+
+This parameter indicates whether the video player controls are displayed. The
+default value is `true`.
+
+#### `opts.keyboard` (boolean)
+
+This parameter indicates whether the player will respond to keyboard shortcuts. The
+default value is `true`.
+
+#### `opts.fullscreen` (boolean)
+
+This parameter indicates whether the player will show a fullscreen button. The
+default value is `true`.
+
+#### `opts.annotations` (boolean)
+
+This parameter indicates whether the player will show video annotations. The
+default value is `true`.
+
+#### `opts.modestBranding` (boolean)
+
+This parameter lets you use a YouTube player that does not show a YouTube logo.
+Even when this option is enabled, a small YouTube text label will still display in
+the upper-right corner of a paused video when the user's mouse pointer hovers over
+the player. The default value is `false`.
+
+#### `opts.related` (boolean)
+
+This parameter indicates whether the player should show related videos when
+playback of the initial video ends. The default value is `true`.
+
+#### `opts.info` (boolean)
+
+This parameter indicates whether the player should display information like the
+video title and uploader before the video starts playing. The default value is
+`true`.
+
+#### `opts.timeupdateFrequency` (number)
+
+The time between `onTimeupdate` callbacks, in milliseconds. Default is `1000`.
+
+See:
+[`YT.Player` parameters](https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player)
+and
+[`playerVars` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
+for additional documentation about these parameters.
 
 ### `player.load(videoId)`
 
@@ -173,11 +235,6 @@ values are: 'small', 'medium', 'large', 'hd720', 'hd1080', 'highres'.
 ### `player.on('playbackRateChange', (playbackRate) => {})`
 
 This event fires whenever the video playback rate changes.
-
-### `player.on('apiChange', () => {})`
-
-This event is fired to indicate that the player has loaded (or unloaded) a module
-with exposed API methods.
 
 ## License
 
