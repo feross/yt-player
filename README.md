@@ -19,16 +19,16 @@ npm install yt-player
 
 Most of the existing YouTube API packages on npm are incomplete or overcomplicated.
 
-Note: If you publish a package that requires all of `babel-runtime`, `lodash`, and
-20KB of other nonsense to do a simple task, you're an irresponsible programmer.
-Using fancy dependencies doesn't make you a better programmer, and it's certainly
-not a "best practice" to ship tons of extra code to your website visitors. Less is
-more. 🔥
+Note: It is irresponsible to publish a package that requires all of
+`babel-runtime`, `lodash`, and 20KB of other nonsense to do a simple task. Using
+fancy dependencies doesn't make you a better programmer, and it's certainly not a
+"best practice" to ship tons of extra code to your website visitors. Less is more.
+🔥
 
 ## Features
 
   - Powered by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
-  - Lightweight - only 2.89kb gzipped and minified!
+  - Lightweight - only 3.06kb gzipped and minified!
   - Extremely fast time-to-first-frame
     - YouTube IFrame API `<script>` is automatically loaded on first use
     - For even faster start time, add `<script src='https://www.youtube.com/iframe_api' async></script>` to your page
