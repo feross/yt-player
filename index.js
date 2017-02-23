@@ -128,6 +128,11 @@ class YouTubePlayer extends EventEmitter {
     else this._queueCommand('pause')
   }
 
+  stop () {
+    if (this._ready) this._player.stopVideo()
+    else this._queueCommand('stop')
+  }
+
   seek (seconds, allowSeekAhead) {
     if (this._ready) this._player.seekTo(seconds, allowSeekAhead)
     else this._queueCommand('seek', seconds, allowSeekAhead)

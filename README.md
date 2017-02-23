@@ -146,6 +146,14 @@ Plays the currently loaded video.
 
 Pauses the currently playing video.
 
+### `player.stop()`
+
+Stops and cancels loading of the current video. This function should be reserved
+for rare situations when you know that the user will not be watching additional
+video in the player. If your intent is to pause the video, you should just call
+`pause()`. If you want to change the video that the player is playing,
+you can call `load()` without calling `stop()` first.
+
 ### `player.seek()`
 
 Seeks to a specified time in the video. If the player is paused when the function
