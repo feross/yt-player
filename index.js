@@ -290,7 +290,7 @@ class YouTubePlayer extends EventEmitter {
         // and is only supported for IFrame embeds. If you are using the IFrame
         // API, which means you are setting the enablejsapi parameter value to 1,
         // you should always specify your domain as the origin parameter value.
-        origin: window.location.host,
+        origin: window.location.origin,
 
         // This parameter controls whether videos play inline or fullscreen in an
         // HTML5 player on iOS. Valid values are:
