@@ -76,7 +76,6 @@ class YouTubePlayer extends EventEmitter {
 
     this.on('playing', this._startIntervalBound)
     this.on('paused', this._stopIntervalBound)
-    this.on('seeked', this._stopIntervalBound)
     this.on('buffering', this._stopIntervalBound)
     this.on('unstarted', this._stopIntervalBound)
     this.on('ended', this._stopIntervalBound)
@@ -140,7 +139,6 @@ class YouTubePlayer extends EventEmitter {
 
     if (this._playerReady) {
       this._player.seekTo(seconds, allowSeekAhead)
-      // self.emit('seeked', seconds)
     } else {
       this._queueCommand('seek', seconds, allowSeekAhead)
     }
@@ -207,7 +205,6 @@ class YouTubePlayer extends EventEmitter {
 
     this.removeListener('playing', this._startIntervalBound)
     this.removeListener('paused', this._stopIntervalBound)
-    this.removeListener('seeked', this._stopIntervalBound)
     this.removeListener('buffering', this._stopIntervalBound)
     this.removeListener('unstarted', this._stopIntervalBound)
     this.removeListener('ended', this._stopIntervalBound)
