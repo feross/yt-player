@@ -49,6 +49,8 @@ class YouTubePlayer extends EventEmitter {
       : selector
 
     this._opts = Object.assign({
+      width: 640,
+      height: 360,
       autoplay: false,
       captions: undefined,
       controls: true,
@@ -226,8 +228,8 @@ class YouTubePlayer extends EventEmitter {
     const opts = this._opts
 
     this._player = new this._api.Player(this.node, {
-      width: opts.width || 640,
-      height: opts.height || 360,
+      width: opts.width,
+      height: opts.height,
       videoId: videoId,
       playerVars: {
         // This parameter specifies whether the initial video will automatically
