@@ -34,6 +34,8 @@ const YOUTUBE_ERROR = {
   UNPLAYABLE_2: 150
 }
 
+const loadIframeAPICallbacks = []
+
 /**
  * YouTube Player. Exposes a better API, with nicer events.
  * @param {selector|HTMLElement} node
@@ -64,7 +66,7 @@ class YouTubePlayer extends EventEmitter {
 
     this._api = null
     this._player = null
-    this._playerReady = false
+    this._ready = false // is player ready?
     this._queue = []
 
     this._interval = null
@@ -74,11 +76,11 @@ class YouTubePlayer extends EventEmitter {
     this._startIntervalBound = () => this._startInterval()
     this._stopIntervalBound = () => this._stopInterval()
 
+    this.on('unstarted', this._stopIntervalBound)
+    this.on('ended', this._stopIntervalBound)
     this.on('playing', this._startIntervalBound)
     this.on('paused', this._stopIntervalBound)
     this.on('buffering', this._stopIntervalBound)
-    this.on('unstarted', this._stopIntervalBound)
-    this.on('ended', this._stopIntervalBound)
 
     loadIframeAPI((err, api) => {
       if (err) return this._destroy(new Error('YouTube Iframe API failed to load'))
@@ -108,74 +110,63 @@ class YouTubePlayer extends EventEmitter {
     // If the player instance is not ready yet, do nothing. Once the player
     // instance is ready, `load(this.videoId)` will be called. This ensures that
     // the last call to `load()` is the one that takes effect.
-    if (!this._playerReady) return
+    if (!this._ready) return
 
     // If the player instance is ready, load the given `videoId`.
     this._player.loadVideoById(videoId)
   }
 
   play () {
-    if (this.destroyed) return
-
-    if (this._playerReady) {
-      this._player.playVideo()
-    } else {
-      this._queueCommand('play')
-    }
+    if (this._ready) this._player.playVideo()
+    else this._queueCommand('play')
   }
 
   pause () {
-    if (this.destroyed) return
-
-    if (this._playerReady) {
-      this._player.pauseVideo()
-    } else {
-      this._queueCommand('pause')
-    }
+    if (this._ready) this._player.pauseVideo()
+    else this._queueCommand('pause')
   }
 
   seek (seconds, allowSeekAhead) {
-    if (this.destroyed) return
-
-    if (this._playerReady) {
-      this._player.seekTo(seconds, allowSeekAhead)
-    } else {
-      this._queueCommand('seek', seconds, allowSeekAhead)
-    }
+    if (this._ready) this._player.seekTo(seconds, allowSeekAhead)
+    else this._queueCommand('seek', seconds, allowSeekAhead)
   }
 
   setVolume (volume) {
-    if (this.destroyed) return
+    if (this._ready) this._player.setVolume(volume)
+    else this._queueCommand('setVolume', volume)
+  }
 
-    if (this._playerReady) {
-      this._player.setVolume(volume)
-    } else {
-      this._queueCommand('setVolume', volume)
-    }
+  setPlaybackRate (rate) {
+    if (this._ready) this._player.setPlaybackRate(rate)
+    else this._queueCommand('setPlaybackRate', rate)
+  }
+
+  getVolume () {
+    return (this._ready && this._player.getVolume()) || 0
+  }
+
+  getPlaybackRate () {
+    return (this._ready && this._player.getPlaybackRate()) || 1
+  }
+
+  getAvailablePlaybackRates () {
+    return (this._ready && this._player.getAvailablePlaybackRates()) || [ 1 ]
   }
 
   getDuration () {
-    if (this._playerReady) {
-      return this._player.getDuration() || 0
-    } else {
-      return 0
-    }
+    return (this._ready && this._player.getDuration()) || 0
   }
 
-  getCurrentTime () {
-    if (this._playerReady) {
-      return this._player.getCurrentTime() || 0
-    } else {
-      return 0
-    }
+  getProgress () {
+    return (this._ready && this._player.getVideoLoadedFraction()) || 0
   }
 
   getState () {
-    if (this._playerReady) {
-      return YOUTUBE_STATES[this._player.getPlayerState()] || 'unstarted'
-    } else {
-      return 'unstarted'
-    }
+    return (this._ready && YOUTUBE_STATES[this._player.getPlayerState()]) || 'unstarted'
+  }
+
+  getCurrentTime () {
+    return (this._ready && this._player.getCurrentTime()) || 0
   }
 
   destroy () {
@@ -183,6 +174,8 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _destroy (err) {
+    if (this.destroyed) return
+
     this.destroyed = true
 
     if (this._player) {
@@ -197,7 +190,7 @@ class YouTubePlayer extends EventEmitter {
 
     this._api = null
     this._player = null
-    this._playerReady = false
+    this._ready = false
     this._queue = null
 
     this._stopInterval()
@@ -216,6 +209,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _queueCommand (command, ...args) {
+    if (this.destroyed) return
     this._queue.push([command, args])
   }
 
@@ -339,7 +333,7 @@ class YouTubePlayer extends EventEmitter {
   _onReady (videoId) {
     if (this.destroyed) return
 
-    this._playerReady = true
+    this._ready = true
 
     // If the videoId that was loaded is not the same as `this.videoId`, then
     // `load()` was called twice before `onReady` fired. Just call
@@ -416,6 +410,7 @@ class YouTubePlayer extends EventEmitter {
    */
   _onTimeupdate () {
     this.emit('timeupdate', this.getCurrentTime())
+    this.emit('progress', this.get)
   }
 
   _startInterval () {
@@ -428,8 +423,6 @@ class YouTubePlayer extends EventEmitter {
     this._interval = null
   }
 }
-
-const loadIframeAPICallbacks = []
 
 function loadIframeAPI (cb) {
   // If API is loaded, there is nothing else to do

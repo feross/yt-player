@@ -171,20 +171,52 @@ is called, it will remain paused. If the function is called from another state
 
 Sets the volume. Accepts an integer between `0` and `100`.
 
+### `player.setPlaybackRate()`
+
+This function sets the suggested playback rate for the current video. If the
+playback rate changes, it will only change for the video that is already being
+played. Calling `load()` will reset the playback rate to 1.
+
+### `player.getVolume()`
+
+Returns the player's current volume, an integer between `0` and `100`. Note that
+`getVolume()` will return the volume even if the player is muted.
+
+### `player.getPlaybackRate()`
+
+This function retrieves the playback rate of the currently playing video. The
+default playback rate is `1`, which indicates that the video is playing at normal
+speed. Playback rates may include values like `0.25`, `0.5`, `1`, `1.5`, and `2`.
+
+### `player.getAvailablePlaybackRates()`
+
+This function returns the set of playback rates in which the current video is
+available. The default value is `1`, which indicates that the video is playing in
+normal speed.
+
+The function returns an array of numbers ordered from slowest to fastest playback
+speed. Even if the player does not support variable playback speeds, the array
+should always contain at least one value (`1`).
+
 ### `player.getDuration()`
 
 Returns the duration in seconds of the currently playing video. Note that
 `getDuration()` will return 0 until the video's metadata is loaded, which normally
 happens just after the video starts playing.
 
-### `player.getCurrentTime()`
+### `player.getProgress()`
 
-Returns the elapsed time in seconds since the video started playing.
+Returns a number between `0` and `1` that specifies the percentage of the video
+that the player shows as buffered.
 
 ### `player.getState()`
 
 Returns the state of the player. Possible values are: `'unstarted'`, `'ended'`,
 `'playing'`, `'paused'`, `'buffering'`, or `'cued'`.
+
+### `player.getCurrentTime()`
+
+Returns the elapsed time in seconds since the video started playing.
 
 ### `player.destroy()`
 
