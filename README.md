@@ -222,6 +222,14 @@ Returns the elapsed time in seconds since the video started playing.
 
 Removes the `<iframe>` containing the player and cleans up all resources.
 
+### `player.destroyed` (boolean)
+
+Returns `true` if the player if `destroy()` has been called on the player.
+
+### `player.videoId` (string)
+
+Returns the currently loaded video ID, i.e. what was passed to `load()`.
+
 ### `player.on('error', (err) => {})`
 
 This event fires if a fatal error occurs in the player. This does not include

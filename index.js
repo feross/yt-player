@@ -44,7 +44,7 @@ class YouTubePlayer extends EventEmitter {
   constructor (selector, opts) {
     super()
 
-    this.node = typeof selector === 'string'
+    this._node = typeof selector === 'string'
       ? document.querySelector(selector)
       : selector
 
@@ -177,7 +177,6 @@ class YouTubePlayer extends EventEmitter {
 
   _destroy (err) {
     if (this.destroyed) return
-
     this.destroyed = true
 
     if (this._player) {
@@ -185,11 +184,10 @@ class YouTubePlayer extends EventEmitter {
       this._player.destroy()
     }
 
-    this._opts = null
-
-    this.node = null
     this.videoId = null
 
+    this._opts = null
+    this._node = null
     this._api = null
     this._player = null
     this._ready = false
@@ -227,7 +225,7 @@ class YouTubePlayer extends EventEmitter {
 
     const opts = this._opts
 
-    this._player = new this._api.Player(this.node, {
+    this._player = new this._api.Player(this._node, {
       width: opts.width,
       height: opts.height,
       videoId: videoId,
