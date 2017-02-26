@@ -84,7 +84,7 @@ class YouTubePlayer extends EventEmitter {
     this.on('paused', this._stopIntervalBound)
     this.on('buffering', this._stopIntervalBound)
 
-    loadIframeAPI((err, api) => {
+    this._loadIframeAPI((err, api) => {
       if (err) return this._destroy(new Error('YouTube Iframe API failed to load'))
       this._api = api
 
@@ -222,6 +222,43 @@ class YouTubePlayer extends EventEmitter {
     while (this._queue.length) {
       const command = this._queue.shift()
       this[command[0]].apply(this, command[1])
+    }
+  }
+
+  _loadIframeAPI (cb) {
+    // If API is loaded, there is nothing else to do
+    if (window.YT && typeof window.YT.Player === 'function') {
+      return cb(null, window.YT)
+    }
+
+    // Otherwise, queue callback until API is loaded
+    loadIframeAPICallbacks.push(cb)
+
+    const scripts = Array.from(document.getElementsByTagName('script'))
+    const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API_SRC)
+
+    // If API <script> tag is not present in the page, inject it. Ensures that
+    // if user includes a hardcoded <script> tag in HTML for performance, another
+    // one will not be added
+    if (!isLoading) {
+      loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
+        if (err) {
+          while (loadIframeAPICallbacks.length) {
+            const loadCb = loadIframeAPICallbacks.shift()
+            loadCb(err)
+          }
+        }
+      })
+    }
+
+    // If ready function is not present, create it
+    if (typeof window.onYouTubeIframeAPIReady !== 'function') {
+      window.onYouTubeIframeAPIReady = () => {
+        while (loadIframeAPICallbacks.length) {
+          const loadCb = loadIframeAPICallbacks.shift()
+          loadCb(null, window.YT)
+        }
+      }
     }
   }
 
@@ -426,43 +463,6 @@ class YouTubePlayer extends EventEmitter {
   _stopInterval () {
     clearInterval(this._interval)
     this._interval = null
-  }
-}
-
-function loadIframeAPI (cb) {
-  // If API is loaded, there is nothing else to do
-  if (window.YT && typeof window.YT.Player === 'function') {
-    return cb(null, window.YT)
-  }
-
-  // Otherwise, queue callback until API is loaded
-  loadIframeAPICallbacks.push(cb)
-
-  const scripts = Array.from(document.getElementsByTagName('script'))
-  const isLoading = scripts.some(script => script.src === YOUTUBE_IFRAME_API_SRC)
-
-  // If API <script> tag is not present in the page, inject it. Ensures that
-  // if user includes a hardcoded <script> tag in HTML for performance, another
-  // one will not be added
-  if (!isLoading) {
-    loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
-      if (err) {
-        while (loadIframeAPICallbacks.length) {
-          const loadCb = loadIframeAPICallbacks.shift()
-          loadCb(err)
-        }
-      }
-    })
-  }
-
-  // If ready function is not present, create it
-  if (typeof window.onYouTubeIframeAPIReady !== 'function') {
-    window.onYouTubeIframeAPIReady = () => {
-      while (loadIframeAPICallbacks.length) {
-        const loadCb = loadIframeAPICallbacks.shift()
-        loadCb(null, window.YT)
-      }
-    }
   }
 }
 
