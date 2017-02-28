@@ -154,32 +154,19 @@ video in the player. If your intent is to pause the video, you should just call
 `pause()`. If you want to change the video that the player is playing,
 you can call `load()` without calling `stop()` first.
 
-### `player.seek()`
+### `player.seek(seconds)`
 
 Seeks to a specified time in the video. If the player is paused when the function
 is called, it will remain paused. If the function is called from another state
-(playing, video cued, etc.), the player will play the video.
-
-- The `seconds` parameter identifies the time to which the player should advance.
-
-  The player will advance to the closest keyframe before that time unless the player has already downloaded the portion of the video to which the user is seeking.
-
-- The `allowSeekAhead` parameter determines whether the player will make a new
-  request to the server if the seconds parameter specifies a time outside of the
-  currently buffered video data.
-
-  We recommend that you set this parameter to `false` while the user drags the mouse
-  along a video progress bar and then set it to `true` when the user releases the
-  mouse. This approach lets a user scroll to different points of a video without
-  requesting new video streams by scrolling past unbuffered points in the video.
-  When the user releases the mouse button, the player advances to the desired point
-  in the video and requests a new video stream if necessary.
+(playing, video cued, etc.), the player will play the video. The player will
+advance to the closest keyframe before that time unless the player has already
+downloaded the portion of the video to which the user is seeking.
 
 ### `player.setVolume(volume)`
 
 Sets the volume. Accepts an integer between `0` and `100`.
 
-### `player.setPlaybackRate()`
+### `player.setPlaybackRate(rate)`
 
 This function sets the suggested playback rate for the current video. If the
 playback rate changes, it will only change for the video that is already being

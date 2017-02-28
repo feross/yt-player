@@ -133,9 +133,9 @@ class YouTubePlayer extends EventEmitter {
     else this._queueCommand('stop')
   }
 
-  seek (seconds, allowSeekAhead) {
-    if (this._ready) this._player.seekTo(seconds, allowSeekAhead)
-    else this._queueCommand('seek', seconds, allowSeekAhead)
+  seek (seconds) {
+    if (this._ready) this._player.seekTo(seconds)
+    else this._queueCommand('seek', seconds)
   }
 
   setVolume (volume) {
