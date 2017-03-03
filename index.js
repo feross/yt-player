@@ -94,8 +94,9 @@ class YouTubePlayer extends EventEmitter {
     })
   }
 
-  load (videoId) {
+  load (videoId, autoplay) {
     if (this.destroyed) return
+    if (autoplay == null) autoplay = true
 
     this.videoId = videoId
 
@@ -115,7 +116,11 @@ class YouTubePlayer extends EventEmitter {
     if (!this._ready) return
 
     // If the player instance is ready, load the given `videoId`.
-    this._player.loadVideoById(videoId)
+    if (autoplay) {
+      this._player.loadVideoById(videoId)
+    } else {
+      this._player.cueVideoById(videoId)
+    }
   }
 
   play () {
