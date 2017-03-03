@@ -38,15 +38,21 @@ const loadIframeAPICallbacks = []
 
 /**
  * YouTube Player. Exposes a better API, with nicer events.
- * @param {selector|HTMLElement} node
+ * @param {HTMLElement|selector} element
  */
 class YouTubePlayer extends EventEmitter {
-  constructor (selector, opts) {
+  constructor (element, opts) {
     super()
 
-    this._node = typeof selector === 'string'
-      ? document.querySelector(selector)
-      : selector
+    const elem = typeof element === 'string'
+      ? document.querySelector(element)
+      : element
+
+    if (elem.id) {
+      this._id = elem.id // use existing element id
+    } else {
+      this._id = elem.id = 'ytplayer-' + Math.random().toString(16).slice(2, 8)
+    }
 
     this._opts = Object.assign({
       width: 640,
@@ -196,8 +202,8 @@ class YouTubePlayer extends EventEmitter {
 
     this.videoId = null
 
+    this._id = null
     this._opts = null
-    this._node = null
     this._api = null
     this._player = null
     this._ready = false
@@ -272,7 +278,7 @@ class YouTubePlayer extends EventEmitter {
 
     const opts = this._opts
 
-    this._player = new this._api.Player(this._node, {
+    this._player = new this._api.Player(this._id, {
       width: opts.width,
       height: opts.height,
       videoId: videoId,

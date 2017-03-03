@@ -56,10 +56,11 @@ player.on('playing', () => {
 
 ## API
 
-### `player = new Player(selector, [opts])`
+### `player = new Player(element, [opts])`
 
-Create a new YouTube player at the DOM node matched by `selector`. Alternatively,
-`selector` can be an instance of `HTMLElement` (i.e. a DOM node).
+Create a new YouTube player. The player will take the place of the HTML element
+`element`. Alternatively, `element` can be a selector string, which will be passed
+to `document.querySelector()`.
 
 Examples: `#player`, `.youtube-player`, or a DOM node.
 
