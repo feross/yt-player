@@ -131,10 +131,14 @@ and
 [`playerVars` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
 for additional documentation about these parameters.
 
-### `player.load(videoId)`
+### `player.load(videoId, [autoplay])`
 
-This function loads and plays the specified `videoId`. An example of a `videoId`
-is `'GKSRyLdjsPA'`.
+This function loads the specified `videoId`. An example of a `videoId` is
+`'GKSRyLdjsPA'`.
+
+Optionally, specify an `autoplay` parameter to indicate whether the video should
+begin playing immediately, or wait for a call to `player.play()`. Default is
+`true`.
 
 This should be the first function called on a new `Player` instance.
 
