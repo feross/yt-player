@@ -1,4 +1,4 @@
-# yt-player [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
+# yt-player [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
 
 [travis-image]: https://img.shields.io/travis/feross/yt-player/master.svg
 [travis-url]: https://travis-ci.org/feross/yt-player
@@ -6,6 +6,8 @@
 [npm-url]: https://npmjs.org/package/yt-player
 [downloads-image]: https://img.shields.io/npm/dm/yt-player.svg
 [downloads-url]: https://npmjs.org/package/yt-player
+[standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+[standard-url]: https://standardjs.com
 
 ### Simple, robust, blazing-fast YouTube Player API
 
