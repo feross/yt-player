@@ -81,14 +81,14 @@ class YouTubePlayer extends EventEmitter {
 
     // Setup listeners for 'timeupdate' events. The YouTube Player does not fire
     // 'timeupdate' events, so they are simulated using a setInterval().
-    this._startIntervalBound = () => this._startInterval()
-    this._stopIntervalBound = () => this._stopInterval()
+    this._startInterval = this._startInterval.bind(this)
+    this._stopInterval = this._stopInterval.bind(this)
 
-    this.on('unstarted', this._stopIntervalBound)
-    this.on('ended', this._stopIntervalBound)
-    this.on('playing', this._startIntervalBound)
-    this.on('paused', this._stopIntervalBound)
-    this.on('buffering', this._stopIntervalBound)
+    this.on('unstarted', this._stopInterval)
+    this.on('ended', this._stopInterval)
+    this.on('playing', this._startInterval)
+    this.on('paused', this._stopInterval)
+    this.on('buffering', this._stopInterval)
 
     this._loadIframeAPI((err, api) => {
       if (err) return this._destroy(new Error('YouTube Iframe API failed to load'))
@@ -212,14 +212,11 @@ class YouTubePlayer extends EventEmitter {
     this._stopInterval()
     this._interval = false
 
-    this.removeListener('playing', this._startIntervalBound)
-    this.removeListener('paused', this._stopIntervalBound)
-    this.removeListener('buffering', this._stopIntervalBound)
-    this.removeListener('unstarted', this._stopIntervalBound)
-    this.removeListener('ended', this._stopIntervalBound)
-
-    this._startIntervalBound = null
-    this._stopIntervalBound = null
+    this.removeListener('playing', this._startInterval)
+    this.removeListener('paused', this._stopInterval)
+    this.removeListener('buffering', this._stopInterval)
+    this.removeListener('unstarted', this._stopInterval)
+    this.removeListener('ended', this._stopInterval)
 
     if (err) this.emit('error', err)
   }
