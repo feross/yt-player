@@ -465,10 +465,12 @@ class YouTubePlayer extends EventEmitter {
 
   _startInterval () {
     this._interval = setInterval(() => this._onTimeupdate(), this._opts.timeupdateFrequency)
-    this._onTimeupdate()
   }
 
   _stopInterval () {
+    // Send one last 'timeupdate' before stopping the interval, except if _startInterval() hasn't
+    // been called yet (This is so 'playing' gets emitted before the first 'timeupdate')
+    if (this._interval) this._onTimeupdate() // one last update before stopping
     clearInterval(this._interval)
     this._interval = null
   }
