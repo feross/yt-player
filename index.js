@@ -460,7 +460,6 @@ class YouTubePlayer extends EventEmitter {
    */
   _onTimeupdate () {
     this.emit('timeupdate', this.getCurrentTime())
-    this.emit('progress', this.get)
   }
 
   _startInterval () {
