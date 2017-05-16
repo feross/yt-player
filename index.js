@@ -407,7 +407,12 @@ class YouTubePlayer extends EventEmitter {
     const state = YOUTUBE_STATES[data.data]
 
     if (state) {
+      // Send a 'timeupdate' anytime the state changes. Note: It's important that 'playing'
+      // gets emitted before the first 'timeupdate', and that no 'timeupdate' events are
+      // emitted after 'pause', 'ended', or 'buffering'.
+      if (['ended', 'paused', 'buffering'].includes(state)) this._onTimeupdate()
       this.emit(state)
+      if (state === 'playing') this._onTimeupdate()
     } else {
       console.error('Unrecognized state change', data)
     }
@@ -469,9 +474,6 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _stopInterval () {
-    // Send one last 'timeupdate' before stopping the interval, except if _startInterval() hasn't
-    // been called yet (This is so 'playing' gets emitted before the first 'timeupdate')
-    if (this._interval) this._onTimeupdate() // one last update before stopping
     clearInterval(this._interval)
     this._interval = null
   }
