@@ -414,7 +414,7 @@ class YouTubePlayer extends EventEmitter {
       this.emit(state)
       if (state === 'playing') this._onTimeupdate()
     } else {
-      console.error('Unrecognized state change', data)
+      throw new Error('Unrecognized state change: ' + data)
     }
   }
 
