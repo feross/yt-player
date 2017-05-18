@@ -410,7 +410,7 @@ class YouTubePlayer extends EventEmitter {
       // Send a 'timeupdate' anytime the state changes. Note: It's important that 'playing'
       // gets emitted before the first 'timeupdate', and that no 'timeupdate' events are
       // emitted after 'pause', 'ended', or 'buffering'.
-      if (['ended', 'paused', 'buffering'].includes(state)) this._onTimeupdate()
+      if (['paused'].includes(state)) this._onTimeupdate()
       this.emit(state)
       if (state === 'playing') this._onTimeupdate()
     } else {
