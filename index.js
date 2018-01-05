@@ -170,7 +170,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   getAvailablePlaybackRates () {
-    return (this._ready && this._player.getAvailablePlaybackRates()) || [ 1 ]
+    return (this._ready && this._player.getAvailablePlaybackRates()) || [1]
   }
 
   getDuration () {
@@ -291,8 +291,7 @@ class YouTubePlayer extends EventEmitter {
         // by default, even if the user has turned captions off. The default
         // behavior is based on user preference.
         cc_load_policy: opts.captions != null
-          ? opts.captions ? 1 : 0
-          : undefined, // default to not setting this option
+          ? opts.captions ? 1 : 0 : undefined, // default to not setting this option
 
         // This parameter indicates whether the video player controls are
         // displayed. For IFrame embeds that load a Flash player, it also defines
@@ -451,9 +450,9 @@ class YouTubePlayer extends EventEmitter {
     // given video. This is not a fatal error. Report it as unplayable so the user
     // has an opportunity to play another video.
     if (code === YOUTUBE_ERROR.UNPLAYABLE_1 ||
-        code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
-        code === YOUTUBE_ERROR.NOT_FOUND ||
-        code === YOUTUBE_ERROR.INVALID_PARAM) {
+      code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
+      code === YOUTUBE_ERROR.NOT_FOUND ||
+      code === YOUTUBE_ERROR.INVALID_PARAM) {
       return this.emit('unplayable', this.videoId)
     }
 
