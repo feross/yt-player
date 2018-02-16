@@ -313,10 +313,10 @@ class YouTubePlayer extends EventEmitter {
         // controls are enabled.
         disablekb: opts.keyboard ? 0 : 1,
 
-        //  Setting the parameter's value to 1 enables the player to be
-        //  controlled via IFrame or JavaScript Player API calls. The default
-        //  value is 0, which means that the player cannot be controlled using
-        //  those APIs.
+        // Setting the parameter's value to 1 enables the player to be
+        // controlled via IFrame or JavaScript Player API calls. The default
+        // value is 0, which means that the player cannot be controlled using
+        // those APIs.
         enablejsapi: 1,
 
         // Setting this parameter to 0 prevents the fullscreen button from
