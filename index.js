@@ -334,7 +334,7 @@ class YouTubePlayer extends EventEmitter {
         // from displaying in the control bar. Note that a small YouTube text
         // label will still display in the upper-right corner of a paused video
         // when the user's mouse pointer hovers over the player.
-        modestbranding: 1,
+        modestbranding: opts.modestBranding ? 1 : 0,
 
         // This parameter provides an extra security measure for the IFrame API
         // and is only supported for IFrame embeds. If you are using the IFrame
