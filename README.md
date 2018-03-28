@@ -173,6 +173,14 @@ downloaded the portion of the video to which the user is seeking.
 
 Sets the volume. Accepts an integer between `0` and `100`.
 
+### `player.mute()`
+
+Mutes the player.
+
+### `player.unMute()`
+
+Unmutes the player.
+
 ### `player.setPlaybackRate(rate)`
 
 This function sets the suggested playback rate for the current video. If the
@@ -183,6 +191,10 @@ played. Calling `load()` will reset the playback rate to 1.
 
 Returns the player's current volume, an integer between `0` and `100`. Note that
 `getVolume()` will return the volume even if the player is muted.
+
+### `player.isMuted()`
+
+Returns true if the player is muted, false if not.
 
 ### `player.getPlaybackRate()`
 
