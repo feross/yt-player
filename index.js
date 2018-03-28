@@ -131,6 +131,16 @@ class YouTubePlayer extends EventEmitter {
     }
   }
 
+  mute () {
+    if (this._ready) this._player.mute()
+    else this._queueCommand('mute')
+  }
+
+  unMute () {
+    if (this._ready) this._player.unMute()
+    else this._queueCommand('unMute')
+  }
+
   play () {
     if (this._ready) this._player.playVideo()
     else this._queueCommand('play')
@@ -159,6 +169,10 @@ class YouTubePlayer extends EventEmitter {
   setPlaybackRate (rate) {
     if (this._ready) this._player.setPlaybackRate(rate)
     else this._queueCommand('setPlaybackRate', rate)
+  }
+
+  isMuted () {
+    return (this._ready && this._player.isMuted()) || false
   }
 
   getVolume () {
@@ -451,9 +465,9 @@ class YouTubePlayer extends EventEmitter {
     // given video. This is not a fatal error. Report it as unplayable so the user
     // has an opportunity to play another video.
     if (code === YOUTUBE_ERROR.UNPLAYABLE_1 ||
-        code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
-        code === YOUTUBE_ERROR.NOT_FOUND ||
-        code === YOUTUBE_ERROR.INVALID_PARAM) {
+      code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
+      code === YOUTUBE_ERROR.NOT_FOUND ||
+      code === YOUTUBE_ERROR.INVALID_PARAM) {
       return this.emit('unplayable', this.videoId)
     }
 
