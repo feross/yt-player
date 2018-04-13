@@ -290,6 +290,11 @@ values are: 'small', 'medium', 'large', 'hd720', 'hd1080', 'highres'.
 
 This event fires whenever the video playback rate changes.
 
+### `player.on('ready', () => {})`
+
+This event fires when the YouTube API calls it's own onReady.  
+This is better than the `unstarted` event, since `unstarted` happens before `ready`, and the `_ready` state must be true to perform any other tasks.
+
 ## License
 
 MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org).
