@@ -131,16 +131,6 @@ class YouTubePlayer extends EventEmitter {
     }
   }
 
-  mute () {
-    if (this._ready) this._player.mute()
-    else this._queueCommand('mute')
-  }
-
-  unMute () {
-    if (this._ready) this._player.unMute()
-    else this._queueCommand('unMute')
-  }
-
   play () {
     if (this._ready) this._player.playVideo()
     else this._queueCommand('play')
@@ -166,17 +156,27 @@ class YouTubePlayer extends EventEmitter {
     else this._queueCommand('setVolume', volume)
   }
 
-  setPlaybackRate (rate) {
-    if (this._ready) this._player.setPlaybackRate(rate)
-    else this._queueCommand('setPlaybackRate', rate)
+  getVolume () {
+    return (this._ready && this._player.getVolume()) || 0
+  }
+
+  mute () {
+    if (this._ready) this._player.mute()
+    else this._queueCommand('mute')
+  }
+
+  unMute () {
+    if (this._ready) this._player.unMute()
+    else this._queueCommand('unMute')
   }
 
   isMuted () {
     return (this._ready && this._player.isMuted()) || false
   }
 
-  getVolume () {
-    return (this._ready && this._player.getVolume()) || 0
+  setPlaybackRate (rate) {
+    if (this._ready) this._player.setPlaybackRate(rate)
+    else this._queueCommand('setPlaybackRate', rate)
   }
 
   getPlaybackRate () {
