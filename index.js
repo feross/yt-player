@@ -409,6 +409,8 @@ class YouTubePlayer extends EventEmitter {
     }
 
     this._flushQueue()
+
+    this.emit('ready')
   }
 
   /**

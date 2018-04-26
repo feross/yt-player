@@ -39,7 +39,7 @@ fancy dependencies doesn't make you a better programmer, and it's certainly not 
   - Differentiate between *fatal* errors and *unplayable video* errors
   - Adds the all-important 'timeupdate' event, which the YouTube API lacks
   - Well-commented codebase makes it easy to understand what's going on
-  - No promises, babel, async-await, large runtime dependencies, or pointless code
+  - No large dependencies or unused code
   - Note: no support for old browsers (e.g. IE11 and below)
 
 ## Usage
@@ -243,6 +243,11 @@ Returns `true` if the player if `destroy()` has been called on the player.
 ### `player.videoId` (string)
 
 Returns the currently loaded video ID, i.e. what was passed to `load()`.
+
+### `player.on('ready', () => {})`
+
+This event fires when the player has finished loading and is ready to begin
+receiving API calls.
 
 ### `player.on('error', (err) => {})`
 
