@@ -244,11 +244,6 @@ Returns `true` if the player if `destroy()` has been called on the player.
 
 Returns the currently loaded video ID, i.e. what was passed to `load()`.
 
-### `player.on('ready', () => {})`
-
-This event fires when the player has finished loading and is ready to begin
-receiving API calls.
-
 ### `player.on('error', (err) => {})`
 
 This event fires if a fatal error occurs in the player. This does not include
