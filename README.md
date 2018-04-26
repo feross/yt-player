@@ -281,6 +281,9 @@ updated.
 These events fire when the player enters the respective state. These event names
 are the same as the possible return values from `player.getState()`.
 
+When the player first loads a video, it will broadcast an `unstarted` event. When a
+video is cued and ready to play, the player will broadcast a `cued` event.
+
 ### `player.on('playbackQualityChange', (quality) => {})`
 
 This event fires whenever the video playback quality changes. Possible
