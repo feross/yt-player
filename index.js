@@ -266,11 +266,10 @@ class YouTubePlayer extends EventEmitter {
     // one will not be added
     if (!isLoading) {
       loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
-        if (err) {
-          while (loadIframeAPICallbacks.length) {
-            const loadCb = loadIframeAPICallbacks.shift()
-            loadCb(err)
-          }
+        if (!err) return
+        while (loadIframeAPICallbacks.length) {
+          const loadCb = loadIframeAPICallbacks.shift()
+          loadCb(err)
         }
       })
     }
