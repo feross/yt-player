@@ -141,7 +141,7 @@ This function loads the specified `videoId`. An example of a `videoId` is
 
 Optionally, specify an `autoplay` parameter to indicate whether the video should
 begin playing immediately, or wait for a call to `player.play()`. Default is
-`true`.
+`false`.
 
 This should be the first function called on a new `Player` instance.
 
