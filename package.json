@@ -1,7 +1,7 @@
 {
   "name": "yt-player",
   "description": "Simple, robust YouTube Iframe Player API",
-  "version": "2.8.0",
+  "version": "3.0.0",
   "author": {
     "name": "Feross Aboukhadijeh",
     "email": "feross@feross.org",
