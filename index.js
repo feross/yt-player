@@ -73,6 +73,7 @@ class YouTubePlayer extends EventEmitter {
     this.destroyed = false
 
     this._api = null
+    this._autoplay = false // autoplay the first video?
     this._player = null
     this._ready = false // is player ready?
     this._queue = []
@@ -94,9 +95,9 @@ class YouTubePlayer extends EventEmitter {
       if (err) return this._destroy(new Error('YouTube Iframe API failed to load'))
       this._api = api
 
-      // If load(videoId) was called before Iframe API loaded, ensure it gets
+      // If load(videoId, [autoplay]) was called before Iframe API loaded, ensure it gets
       // called again now
-      if (this.videoId) this.load(this.videoId)
+      if (this.videoId) this.load(this.videoId, this._autoplay)
     })
   }
 
@@ -105,6 +106,7 @@ class YouTubePlayer extends EventEmitter {
     if (autoplay == null) autoplay = true
 
     this.videoId = videoId
+    this._autoplay = autoplay
 
     // If the Iframe API is not ready yet, do nothing. Once the Iframe API is
     // ready, `load(this.videoId)` will be called.
