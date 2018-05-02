@@ -113,8 +113,6 @@ class YouTubePlayer extends EventEmitter {
     // If there is no player instance, create one.
     if (!this._player) {
       this._createPlayer(videoId)
-      this.emit('unstarted')
-      this.emit('buffering')
       return
     }
 
