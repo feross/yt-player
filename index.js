@@ -400,12 +400,19 @@ class YouTubePlayer extends EventEmitter {
 
     this._ready = true
 
-    // If the videoId that was loaded is not the same as `this.videoId`, then
-    // `load()` was called twice before `onReady` fired. Just call
-    // `load(this.videoId)` to load the right videoId.
-    if (videoId !== this.videoId) {
-      this.load(this.videoId)
-    }
+    // Once the player is ready, always call `load(videoId, [autoplay])` to handle
+    // these possible cases:
+    //
+    //   1. `load(videoId, true)` was called before the player was ready. Ensure that
+    //      the selected video starts to play.
+    //
+    //   2. `load(videoId, false)` was called before the player was ready. Now the
+    //      player is ready and there's nothing to do.
+    //
+    //   3. `load(videoId, [autoplay])` was called multiple times before the player
+    //      was ready. Therefore, the player was initialized with the wrong videoId,
+    //      so load the latest videoId and potentially autoplay it.
+    this.load(this.videoId, this._autoplay)
 
     this._flushQueue()
   }
