@@ -173,14 +173,14 @@ class YouTubePlayer extends EventEmitter {
     return (this._ready && this._player.isMuted()) || false
   }
 
-  setPlaybackRate (rate) {
-    if (this._ready) this._player.setPlaybackRate(rate)
-    else this._queueCommand('setPlaybackRate', rate)
-  }
-
   setSize (width, height) {
     if (this._ready) this._player.setSize(width, height)
     else this._queueCommand('setSize', width, height)
+  }
+
+  setPlaybackRate (rate) {
+    if (this._ready) this._player.setPlaybackRate(rate)
+    else this._queueCommand('setPlaybackRate', rate)
   }
 
   getPlaybackRate () {

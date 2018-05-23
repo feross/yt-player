@@ -190,6 +190,10 @@ Unmutes the player.
 
 Returns true if the player is muted, false if not.
 
+### `player.setSize(width, height)`
+
+Sets the size in pixels of the `<iframe>` that contains the player.
+
 ### `player.setPlaybackRate(rate)`
 
 This function sets the suggested playback rate for the current video. If the
