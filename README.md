@@ -58,15 +58,27 @@ player.on('playing', () => {
 
 ## API
 
-### `player = new Player(element, [opts])`
+### `player = new Player([element], [opts])`
+
+Valid constructor calls:
+
+```js
+player1 = new Player('selector')
+player2 = new Player('selector', opts)
+player3 = new Player(null, opts)
+player4 = new Player()
+```
 
 Create a new YouTube player. The player will take the place of the HTML element
 `element`. Alternatively, `element` can be a selector string, which will be passed
 to `document.querySelector()`.
 
+The player can be initialized without any arguments as well. However, you need to lazy initialize it before you can `load()` the player
+
 Examples: `#player`, `.youtube-player`, or a DOM node.
 
 Optionally, provide an options object `opts` to customize the player.
+
 
 #### `opts.width` (number)
 
@@ -133,6 +145,27 @@ See:
 and
 [`playerVars` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
 for additional documentation about these parameters.
+
+### `player.setElement(element)`
+
+Can be called to set the DOM node of rendered player lazily. Usage:
+
+```js
+const player = new Player()
+// ... code
+player.setElement('#nodeName')
+player.load('youtubeVideoID')
+```
+
+### `player.setOptions(opts)`
+
+Can be called to set the options of the rendered player lazily. Usage:
+
+```js
+const player = new Player('#nodeName')
+// ... code
+player.setOptions({optionProperties: 'goes-here'})
+```
 
 ### `player.load(videoId, [autoplay])`
 
