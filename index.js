@@ -148,7 +148,15 @@ class YouTubePlayer extends EventEmitter {
        return this.emit(new Error('Player is destroyed. Cannot call setElement'))
     }
 
+    
     const elem = typeof element === 'string' ? document.querySelector(element) : element
+
+    if(this._player) {
+      // Player is already loaded. Cannot initialize
+      return this._destroy(new Error('Illegal setElement call on loaded player. Create new instance'))
+    }
+
+    // otherwise, if lazy loading, just update the ID
 
     this._id = elem.id || 'ytplayer-' + Math.random().toString(16).slice(2, 8)
 
