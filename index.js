@@ -44,14 +44,21 @@ class YouTubePlayer extends EventEmitter {
   constructor (element, opts) {
     super()
 
-    const elem = typeof element === 'string'
+    if(element) { // Lazy element initialization possible
+      const elem = typeof element === 'string'
       ? document.querySelector(element)
       : element
 
-    if (elem.id) {
-      this._id = elem.id // use existing element id
-    } else {
-      this._id = elem.id = 'ytplayer-' + Math.random().toString(16).slice(2, 8)
+      if (elem.id) {
+        this._id = elem.id // use existing element id
+      } else {
+        this._id = elem.id = 'ytplayer-' + Math.random().toString(16).slice(2, 8)
+      }
+    }
+
+    
+    if(!opts) { // Lazy option initialization possible
+      opts = {}
     }
 
     this._opts = Object.assign({
@@ -104,6 +111,11 @@ class YouTubePlayer extends EventEmitter {
   load (videoId, autoplay = false) {
     if (this.destroyed) return
 
+    // DOM element not set yet
+    if (!this._id) {
+      return this._destroy(new Error('Initialize with a DOM node from constructor call or from setElement method'))
+    }
+
     this.videoId = videoId
     this._autoplay = autoplay
 
@@ -128,6 +140,39 @@ class YouTubePlayer extends EventEmitter {
     } else {
       this._player.cueVideoById(videoId)
     }
+  }
+
+  setElement(element) {
+    if (this.destroyed) {
+       // Player instance already exists. Should not initialize twice
+       return this.emit(new Error('Player is destroyed. Cannot call setElement'))
+    }
+
+    const elem = typeof element === 'string' ? document.querySelector(element) : element
+
+    this._id = elem.id || 'ytplayer-' + Math.random().toString(16).slice(2, 8)
+
+  }
+
+  setOptions(opts) {
+    if (this.destroyed) {
+      return this.emit(new Error('Player is destroyed. Cannot call setOptions'))
+    }
+
+    this._opts = Object.assign({
+      width: 640,
+      height: 360,
+      autoplay: false,
+      captions: undefined,
+      controls: true,
+      keyboard: true,
+      fullscreen: true,
+      annotations: true,
+      modestBranding: false,
+      related: true,
+      info: true,
+      timeupdateFrequency: 1000
+    }, opts)
   }
 
   play () {
