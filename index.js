@@ -230,7 +230,6 @@ class YouTubePlayer extends EventEmitter {
     this._queue = null
 
     this._stopInterval()
-    this._interval = false
 
     this.removeListener('playing', this._startInterval)
     this.removeListener('paused', this._stopInterval)
