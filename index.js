@@ -85,9 +85,9 @@ class YouTubePlayer extends EventEmitter {
     this._startInterval = this._startInterval.bind(this)
     this._stopInterval = this._stopInterval.bind(this)
 
+    this.on('playing', this._startInterval)
     this.on('unstarted', this._stopInterval)
     this.on('ended', this._stopInterval)
-    this.on('playing', this._startInterval)
     this.on('paused', this._stopInterval)
     this.on('buffering', this._stopInterval)
 
