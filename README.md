@@ -58,7 +58,7 @@ player.on('playing', () => {
 
 ## API
 
-### `player = new Player(element, [opts])`
+### `player = new YTPlayer(element, [opts])`
 
 Create a new YouTube player. The player will take the place of the HTML element
 `element`. Alternatively, `element` can be a selector string, which will be passed
@@ -151,7 +151,7 @@ Plays the currently loaded video.
 
 ### `player.pause()`
 
-Pauses the currently playing video.
+Pauses the currently loaded video.
 
 ### `player.stop()`
 
@@ -220,7 +220,7 @@ should always contain at least one value (`1`).
 
 Returns the duration in seconds of the currently playing video. Note that
 `getDuration()` will return 0 until the video's metadata is loaded, which normally
-happens just after the video starts playing.
+happens just before the video starts playing.
 
 ### `player.getProgress()`
 
@@ -242,7 +242,7 @@ Removes the `<iframe>` containing the player and cleans up all resources.
 
 ### `player.destroyed` (boolean)
 
-Returns `true` if the player if `destroy()` has been called on the player.
+Returns `true` if `destroy()` has been called on the player.
 
 ### `player.videoId` (string)
 
@@ -299,4 +299,4 @@ This event fires whenever the video playback rate changes.
 
 ## License
 
-MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org).
+MIT. Copyright (c) [Feross Aboukhadijeh](https://feross.org).
