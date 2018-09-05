@@ -41,7 +41,7 @@ const loadIframeAPICallbacks = []
  * @param {HTMLElement|selector} element
  */
 class YouTubePlayer extends EventEmitter {
-  constructor (element, opts) {
+  constructor(element, opts) {
     super()
 
     const elem = typeof element === 'string'
@@ -53,6 +53,8 @@ class YouTubePlayer extends EventEmitter {
     } else {
       this._id = elem.id = 'ytplayer-' + Math.random().toString(16).slice(2, 8)
     }
+
+    this._elem = elem;
 
     this._opts = Object.assign({
       width: 640,
@@ -101,7 +103,7 @@ class YouTubePlayer extends EventEmitter {
     })
   }
 
-  load (videoId, autoplay = false) {
+  load(videoId, autoplay = false) {
     if (this.destroyed) return
 
     this.videoId = videoId
@@ -130,88 +132,88 @@ class YouTubePlayer extends EventEmitter {
     }
   }
 
-  play () {
+  play() {
     if (this._ready) this._player.playVideo()
     else this._queueCommand('play')
   }
 
-  pause () {
+  pause() {
     if (this._ready) this._player.pauseVideo()
     else this._queueCommand('pause')
   }
 
-  stop () {
+  stop() {
     if (this._ready) this._player.stopVideo()
     else this._queueCommand('stop')
   }
 
-  seek (seconds) {
+  seek(seconds) {
     if (this._ready) this._player.seekTo(seconds, true)
     else this._queueCommand('seek', seconds)
   }
 
-  setVolume (volume) {
+  setVolume(volume) {
     if (this._ready) this._player.setVolume(volume)
     else this._queueCommand('setVolume', volume)
   }
 
-  getVolume () {
+  getVolume() {
     return (this._ready && this._player.getVolume()) || 0
   }
 
-  mute () {
+  mute() {
     if (this._ready) this._player.mute()
     else this._queueCommand('mute')
   }
 
-  unMute () {
+  unMute() {
     if (this._ready) this._player.unMute()
     else this._queueCommand('unMute')
   }
 
-  isMuted () {
+  isMuted() {
     return (this._ready && this._player.isMuted()) || false
   }
 
-  setSize (width, height) {
+  setSize(width, height) {
     if (this._ready) this._player.setSize(width, height)
     else this._queueCommand('setSize', width, height)
   }
 
-  setPlaybackRate (rate) {
+  setPlaybackRate(rate) {
     if (this._ready) this._player.setPlaybackRate(rate)
     else this._queueCommand('setPlaybackRate', rate)
   }
 
-  getPlaybackRate () {
+  getPlaybackRate() {
     return (this._ready && this._player.getPlaybackRate()) || 1
   }
 
-  getAvailablePlaybackRates () {
-    return (this._ready && this._player.getAvailablePlaybackRates()) || [ 1 ]
+  getAvailablePlaybackRates() {
+    return (this._ready && this._player.getAvailablePlaybackRates()) || [1]
   }
 
-  getDuration () {
+  getDuration() {
     return (this._ready && this._player.getDuration()) || 0
   }
 
-  getProgress () {
+  getProgress() {
     return (this._ready && this._player.getVideoLoadedFraction()) || 0
   }
 
-  getState () {
+  getState() {
     return (this._ready && YOUTUBE_STATES[this._player.getPlayerState()]) || 'unstarted'
   }
 
-  getCurrentTime () {
+  getCurrentTime() {
     return (this._ready && this._player.getCurrentTime()) || 0
   }
 
-  destroy () {
+  destroy() {
     this._destroy()
   }
 
-  _destroy (err) {
+  _destroy(err) {
     if (this.destroyed) return
     this.destroyed = true
 
@@ -240,19 +242,19 @@ class YouTubePlayer extends EventEmitter {
     if (err) this.emit('error', err)
   }
 
-  _queueCommand (command, ...args) {
+  _queueCommand(command, ...args) {
     if (this.destroyed) return
     this._queue.push([command, args])
   }
 
-  _flushQueue () {
+  _flushQueue() {
     while (this._queue.length) {
       const command = this._queue.shift()
       this[command[0]].apply(this, command[1])
     }
   }
 
-  _loadIframeAPI (cb) {
+  _loadIframeAPI(cb) {
     // If API is loaded, there is nothing else to do
     if (window.YT && typeof window.YT.Player === 'function') {
       return cb(null, window.YT)
@@ -288,12 +290,12 @@ class YouTubePlayer extends EventEmitter {
     }
   }
 
-  _createPlayer (videoId) {
+  _createPlayer(videoId) {
     if (this.destroyed) return
 
     const opts = this._opts
 
-    this._player = new this._api.Player(this._id, {
+    this._player = new this._api.Player(this._elem, {
       width: opts.width,
       height: opts.height,
       videoId: videoId,
@@ -398,7 +400,7 @@ class YouTubePlayer extends EventEmitter {
    * This event fires when the player has finished loading and is ready to begin
    * receiving API calls.
    */
-  _onReady (videoId) {
+  _onReady(videoId) {
     if (this.destroyed) return
 
     this._ready = true
@@ -424,7 +426,7 @@ class YouTubePlayer extends EventEmitter {
    * Called when the player's state changes. We emit friendly events so the user
    * doesn't need to use YouTube's YT.PlayerState.* event constants.
    */
-  _onStateChange (data) {
+  _onStateChange(data) {
     if (this.destroyed) return
 
     const state = YOUTUBE_STATES[data.data]
@@ -449,7 +451,7 @@ class YouTubePlayer extends EventEmitter {
    * This event fires whenever the video playback quality changes. Possible
    * values are: 'small', 'medium', 'large', 'hd720', 'hd1080', 'highres'.
    */
-  _onPlaybackQualityChange (data) {
+  _onPlaybackQualityChange(data) {
     if (this.destroyed) return
     this.emit('playbackQualityChange', data.data)
   }
@@ -457,7 +459,7 @@ class YouTubePlayer extends EventEmitter {
   /**
    * This event fires whenever the video playback rate changes.
    */
-  _onPlaybackRateChange (data) {
+  _onPlaybackRateChange(data) {
     if (this.destroyed) return
     this.emit('playbackRateChange', data.data)
   }
@@ -465,7 +467,7 @@ class YouTubePlayer extends EventEmitter {
   /**
    * This event fires if an error occurs in the player.
    */
-  _onError (data) {
+  _onError(data) {
     if (this.destroyed) return
 
     const code = data.data
@@ -478,9 +480,9 @@ class YouTubePlayer extends EventEmitter {
     // given video. This is not a fatal error. Report it as unplayable so the user
     // has an opportunity to play another video.
     if (code === YOUTUBE_ERROR.UNPLAYABLE_1 ||
-        code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
-        code === YOUTUBE_ERROR.NOT_FOUND ||
-        code === YOUTUBE_ERROR.INVALID_PARAM) {
+      code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
+      code === YOUTUBE_ERROR.NOT_FOUND ||
+      code === YOUTUBE_ERROR.INVALID_PARAM) {
       return this.emit('unplayable', this.videoId)
     }
 
@@ -492,15 +494,15 @@ class YouTubePlayer extends EventEmitter {
    * This event fires when the time indicated by the `getCurrentTime()` method
    * has been updated.
    */
-  _onTimeupdate () {
+  _onTimeupdate() {
     this.emit('timeupdate', this.getCurrentTime())
   }
 
-  _startInterval () {
+  _startInterval() {
     this._interval = setInterval(() => this._onTimeupdate(), this._opts.timeupdateFrequency)
   }
 
-  _stopInterval () {
+  _stopInterval() {
     clearInterval(this._interval)
     this._interval = null
   }
