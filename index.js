@@ -1,9 +1,9 @@
 const EventEmitter = require('events').EventEmitter
 const loadScript = require('load-script2')
 
-const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
+export const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
-const YOUTUBE_STATES = {
+export const YOUTUBE_STATES = {
   '-1': 'unstarted',
   '0': 'ended',
   '1': 'playing',
@@ -12,7 +12,7 @@ const YOUTUBE_STATES = {
   '5': 'cued'
 }
 
-const YOUTUBE_ERROR = {
+export const YOUTUBE_ERROR = {
   // The request contains an invalid parameter value. For example, this error
   // occurs if you specify a videoId that does not have 11 characters, or if the
   // videoId contains invalid characters, such as exclamation points or asterisks.
@@ -40,7 +40,7 @@ const loadIframeAPICallbacks = []
  * YouTube Player. Exposes a better API, with nicer events.
  * @param {HTMLElement|selector} element
  */
-class YouTubePlayer extends EventEmitter {
+export class YouTubePlayer extends EventEmitter {
   constructor (element, opts) {
     super()
 
@@ -501,5 +501,3 @@ class YouTubePlayer extends EventEmitter {
     this._interval = null
   }
 }
-
-module.exports = YouTubePlayer
