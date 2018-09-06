@@ -1,5 +1,5 @@
-const EventEmitter = require('events').EventEmitter
-const loadScript = require('load-script2')
+import { EventEmitter } from 'events';
+import * as loadScript from 'load-script2';
 
 export const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
