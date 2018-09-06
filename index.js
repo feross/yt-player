@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import * as loadScript from 'load-script2';
+import load from 'load-script2';
 
 export const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
@@ -264,7 +264,7 @@ export class YouTubePlayer extends EventEmitter {
     // if user includes a hardcoded <script> tag in HTML for performance, another
     // one will not be added
     if (!isLoading) {
-      loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
+      load(YOUTUBE_IFRAME_API_SRC, (err) => {
         if (!err) return
         while (loadIframeAPICallbacks.length) {
           const loadCb = loadIframeAPICallbacks.shift()
