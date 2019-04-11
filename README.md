@@ -81,10 +81,10 @@ This parameter indicates the height of the player.
 This parameter indicates whether the initial video will automatically start to play
 when the player loads. The default value is `false`.
 
-#### `opts.captions` (boolean)
+#### `opts.captions` (string)
 
-This parameter indicates whether closed captions should be shown, even if the user
-has turned captions off. The default behavior is based on user preference.
+This parameter indicates the language of the closed captions that should be shown, even if the user
+has turned captions off. The default behavior is based on user preference. The parameter value is an [ISO 639-1 two-letter language code](http://www.loc.gov/standards/iso639-2/php/code_list.php) or a fully specified locale.
 
 #### `opts.controls` (boolean)
 
