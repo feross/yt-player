@@ -268,8 +268,7 @@ class YouTubePlayer extends EventEmitter {
     // if user includes a hardcoded <script> tag in HTML for performance, another
     // one will not be added
     if (!isLoading) {
-      loadScript(YOUTUBE_IFRAME_API_SRC, (err) => {
-        if (!err) return
+      loadScript(YOUTUBE_IFRAME_API_SRC).catch(err => {
         while (loadIframeAPICallbacks.length) {
           const loadCb = loadIframeAPICallbacks.shift()
           loadCb(err)
