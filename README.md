@@ -17,6 +17,8 @@
 npm install yt-player
 ```
 
+If you do not use a bundler, you can use the [standalone script](https://bundle.run/yt-player).
+
 ## Why this package?
 
 Most of the existing YouTube API packages on npm are incomplete or overcomplicated.
