@@ -5,11 +5,11 @@ const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
 const YOUTUBE_STATES = {
   '-1': 'unstarted',
-  '0': 'ended',
-  '1': 'playing',
-  '2': 'paused',
-  '3': 'buffering',
-  '5': 'cued'
+  0: 'ended',
+  1: 'playing',
+  2: 'paused',
+  3: 'buffering',
+  5: 'cued'
 }
 
 const YOUTUBE_ERROR = {
@@ -188,7 +188,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   getAvailablePlaybackRates () {
-    return (this._ready && this._player.getAvailablePlaybackRates()) || [ 1 ]
+    return (this._ready && this._player.getAvailablePlaybackRates()) || [1]
   }
 
   getDuration () {
