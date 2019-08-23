@@ -66,7 +66,8 @@ class YouTubePlayer extends EventEmitter {
       modestBranding: false,
       related: true,
       info: true,
-      timeupdateFrequency: 1000
+      timeupdateFrequency: 1000,
+      playsInline: true
     }, opts)
 
     this.videoId = null
@@ -363,7 +364,7 @@ class YouTubePlayer extends EventEmitter {
         //        default value, though the default is subject to change.
         //   - 1: This value causes inline playback for UIWebViews created with
         //        the allowsInlineMediaPlayback property set to TRUE.
-        playsinline: 1,
+        playsinline: opts.playsInline ? 1 : 0,
 
         // This parameter indicates whether the player should show related videos
         // when playback of the initial video ends. Supported values are 0 and 1.
