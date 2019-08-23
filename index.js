@@ -310,6 +310,16 @@ class YouTubePlayer extends EventEmitter {
           ? opts.captions ? 1 : 0
           : undefined, // default to not setting this option
 
+        // Sets the player's interface language.
+        hl: opts.captions != null
+          ? opts.captions
+          : undefined, // default to not setting this option
+
+        // Sets the player's interface language.
+        cc_lang_pref: opts.captions != null
+          ? opts.captions
+          : undefined, // default to not setting this option
+
         // This parameter indicates whether the video player controls are
         // displayed. For IFrame embeds that load a Flash player, it also defines
         // when the controls display in the player as well as when the player
