@@ -307,16 +307,22 @@ class YouTubePlayer extends EventEmitter {
         // by default, even if the user has turned captions off. The default
         // behavior is based on user preference.
         cc_load_policy: opts.captions != null
-          ? opts.captions ? 1 : 0
+          ? opts.captions !== false ? 1 : 0
           : undefined, // default to not setting this option
 
-        // Sets the player's interface language.
-        hl: opts.captions != null
+        // Sets the player's interface language. The parameter value is an ISO
+        // 639-1 two-letter language code or a fully specified locale. For
+        // example, fr and fr-ca are both valid values. Other language input
+        // codes, such as IETF language tags (BCP 47) might also be handled
+        // properly.
+        hl: (opts.captions != null && opts.captions !== false)
           ? opts.captions
           : undefined, // default to not setting this option
 
-        // Sets the player's interface language.
-        cc_lang_pref: opts.captions != null
+        // This parameter specifies the default language that the player will
+        // use to display captions. Set the parameter's value to an ISO 639-1
+        // two-letter language code.
+        cc_lang_pref: (opts.captions != null && opts.captions !== false)
           ? opts.captions
           : undefined, // default to not setting this option
 
