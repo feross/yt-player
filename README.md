@@ -136,6 +136,10 @@ and
 [`playerVars` parameters](https://developers.google.com/youtube/player_parameters#Parameters)
 for additional documentation about these parameters.
 
+#### `opts.playsInline` (boolean)
+
+This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS. The default value is `true`.
+
 ### `player.load(videoId, [autoplay])`
 
 This function loads the specified `videoId`. An example of a `videoId` is
