@@ -171,6 +171,10 @@ video in the player. If your intent is to pause the video, you should just call
 `pause()`. If you want to change the video that the player is playing,
 you can call `load()` without calling `stop()` first.
 
+### `player.setPlaybackQuality(quality)`
+
+Set video quality: small, medium, large, hd720,hd1080, highres or default
+
 ### `player.seek(seconds)`
 
 Seeks to a specified time in the video. If the player is paused when the function

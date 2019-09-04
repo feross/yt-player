@@ -184,6 +184,11 @@ class YouTubePlayer extends EventEmitter {
     else this._queueCommand('setPlaybackRate', rate)
   }
 
+  setPlaybackQuality(quality) {
+    if (this._ready) this._player.setPlaybackQuality(quality)
+    else this._queueCommand('setPlaybackQuality', quality)
+  }
+
   getPlaybackRate () {
     return (this._ready && this._player.getPlaybackRate()) || 1
   }
@@ -206,7 +211,7 @@ class YouTubePlayer extends EventEmitter {
 
   getCurrentTime () {
     return (this._ready && this._player.getCurrentTime()) || 0
-  }
+  }  
 
   destroy () {
     this._destroy()
