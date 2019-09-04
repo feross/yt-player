@@ -171,10 +171,6 @@ video in the player. If your intent is to pause the video, you should just call
 `pause()`. If you want to change the video that the player is playing,
 you can call `load()` without calling `stop()` first.
 
-### `player.setPlaybackQuality(quality)`
-
-Set video quality: small, medium, large, hd720,hd1080, highres or default
-
 ### `player.seek(seconds)`
 
 Seeks to a specified time in the video. If the player is paused when the function
@@ -213,6 +209,14 @@ Sets the size in pixels of the `<iframe>` that contains the player.
 This function sets the suggested playback rate for the current video. If the
 playback rate changes, it will only change for the video that is already being
 played. Calling `load()` will reset the playback rate to 1.
+
+### `player.setPlaybackQuality(suggestedQuality)`
+
+This function sets the suggested video quality for the current video. The function causes the video to reload at its current position in the new quality. If the playback quality does change, it will only change for the video being played. Calling this function does not guarantee that the playback quality will actually change. However, if the playback quality does change, the `'playbackqualitychange'` event will fire, and your code should respond to the event rather than the fact that it called the `setPlaybackQuality` function.
+
+The `suggestedQuality` parameter value can be `'small'`, `'medium'`, `'large'`, `'hd720'`, `'hd1080'`, `'highres'` or `'default'`. We recommend that you set the parameter value to `'default'`, which instructs YouTube to select the most appropriate playback quality, which will vary for different users, videos, systems and other playback conditions.
+
+If you call the `setPlaybackQuality` function with a `suggestedQuality` level that is not available for the video, then the quality will be set to the next lowest level that is available. In addition, setting `suggestedQuality` to a value that is not a recognized quality level is equivalent to setting `suggestedQuality` to `'default'`.
 
 ### `player.getPlaybackRate()`
 
