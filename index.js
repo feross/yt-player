@@ -222,7 +222,7 @@ class YouTubePlayer extends EventEmitter {
     this.destroyed = true
 
     if (this._player) {
-      this._player.stopVideo()
+      this._player.stopVideo && this._player.stopVideo()
       this._player.destroy()
     }
 
