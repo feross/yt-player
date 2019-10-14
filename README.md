@@ -121,8 +121,9 @@ the player. The default value is `false`.
 
 #### `opts.related` (boolean)
 
-This parameter indicates whether the player should show related videos when
-playback of the initial video ends. The default value is `true`.
+This parameter indicates whether the player should show related videos from the
+same channel (`false`) or from any channel (`true`) when playback of the video
+ends. The default value is `true`.
 
 #### `opts.timeupdateFrequency` (number)
 

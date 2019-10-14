@@ -386,9 +386,9 @@ class YouTubePlayer extends EventEmitter {
         //        the allowsInlineMediaPlayback property set to TRUE.
         playsinline: opts.playsInline ? 1 : 0,
 
-        // This parameter indicates whether the player should show related videos
-        // when playback of the initial video ends. Supported values are 0 and 1.
-        // The default value is 1.
+        // This parameter indicates whether the player should show related
+        // videos from the same channel (0) or from any channel (1) when
+        // playback of the video ends. The default value is 1.
         rel: opts.related ? 1 : 0,
 
         // (Not part of documented API) Allow html elements with higher z-index
