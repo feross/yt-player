@@ -65,7 +65,6 @@ class YouTubePlayer extends EventEmitter {
       annotations: true,
       modestBranding: false,
       related: true,
-      info: true,
       timeupdateFrequency: 1000,
       playsInline: true
     }, opts)
@@ -391,15 +390,6 @@ class YouTubePlayer extends EventEmitter {
         // when playback of the initial video ends. Supported values are 0 and 1.
         // The default value is 1.
         rel: opts.related ? 1 : 0,
-
-        // Supported values are 0 and 1. Setting the parameter's value to 0
-        // causes the player to not display information like the video title and
-        // uploader before the video starts playing. If the player is loading a
-        // playlist, and you explicitly set the parameter value to 1, then, upon
-        // loading, the player will also display thumbnail images for the videos
-        // in the playlist. Note that this functionality is only supported for
-        // the AS3 player.
-        showinfo: opts.info ? 1 : 0,
 
         // (Not part of documented API) Allow html elements with higher z-index
         // to be shown on top of the YouTube player.

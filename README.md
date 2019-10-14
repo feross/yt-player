@@ -124,12 +124,6 @@ the player. The default value is `false`.
 This parameter indicates whether the player should show related videos when
 playback of the initial video ends. The default value is `true`.
 
-#### `opts.info` (boolean)
-
-This parameter indicates whether the player should display information like the
-video title and uploader before the video starts playing. The default value is
-`true`.
-
 #### `opts.timeupdateFrequency` (number)
 
 The time between `onTimeupdate` callbacks, in milliseconds. Default is `1000`.
