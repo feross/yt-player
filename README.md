@@ -11,13 +11,15 @@
 
 ### Simple, robust, blazing-fast YouTube Player API
 
+This package is used on [Play.cash](https://play.cash).
+
 ## Install
 
 ```
 npm install yt-player
 ```
 
-If you do not use a bundler, you can use the [standalone script](https://bundle.run/yt-player). This package is used on [Play.cash](https://play.cash).
+If you do not use a bundler, you can use the [standalone script](https://bundle.run/yt-player) directly in a `<script>` tag.
 
 ## Why this package?
 
