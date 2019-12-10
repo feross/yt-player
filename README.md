@@ -141,7 +141,15 @@ for additional documentation about these parameters.
 
 This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS. The default value is `true`.
 
-### `player.load(videoId, [autoplay])`
+#### `opts.start` (number)
+
+This parameter causes the player to begin playing the video at the given number
+of seconds from the start of the video. The parameter value is a positive integer.
+Note that the player will look for the closest keyframe to the time you specify.
+This means that sometimes the play head may seek to just before the requested time,
+usually no more than around two seconds.
+
+### `player.load(videoId, [autoplay, start])`
 
 This function loads the specified `videoId`. An example of a `videoId` is
 `'GKSRyLdjsPA'`.
@@ -149,6 +157,9 @@ This function loads the specified `videoId`. An example of a `videoId` is
 Optionally, specify an `autoplay` parameter to indicate whether the video should
 begin playing immediately, or wait for a call to `player.play()`. Default is
 `false`.
+
+The optional `start` parameter accepts a float/integer. If it is specified,
+then the video will start from the closest keyframe to the specified time.
 
 This should be the first function called on a new `Player` instance.
 
