@@ -397,7 +397,7 @@ class YouTubePlayer extends EventEmitter {
         // to be shown on top of the YouTube player.
         wmode: 'opaque',
 
-        // This parameter causes the player to begin playing the video at the given number 
+        // This parameter causes the player to begin playing the video at the given number
         // of seconds from the start of the video. The parameter value is a positive integer.
         // Note that similar to the seek function, the player will look for the closest
         // keyframe to the time you specify. This means that sometimes the play head may seek
