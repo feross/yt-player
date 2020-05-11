@@ -14,7 +14,7 @@
     "load-script2": "^2.0.1"
   },
   "devDependencies": {
-    "standard": "*"
+    "standard": ">=14.3.4"
   },
   "homepage": "https://github.com/feross/yt-player",
   "keywords": [
