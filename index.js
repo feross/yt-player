@@ -301,6 +301,7 @@ class YouTubePlayer extends EventEmitter {
       width: opts.width,
       height: opts.height,
       videoId: videoId,
+      host: 'https://www.youtube-nocookie.com',
       playerVars: {
         // This parameter specifies whether the initial video will automatically
         // start to play when the player loads. Supported values are 0 or 1. The
