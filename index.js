@@ -303,7 +303,6 @@ class YouTubePlayer extends EventEmitter {
       }
     }
   }
-  
 
   _createPlayer (videoId) {
     if (this.destroyed) return
