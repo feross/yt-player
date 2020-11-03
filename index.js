@@ -102,7 +102,7 @@ class YouTubePlayer extends EventEmitter {
     })
   }
 
-  load (videoId, autoplay = false, start) {
+  load (videoId, autoplay = false, start = 0) {
     if (this.destroyed) return
 
     this.videoId = videoId
