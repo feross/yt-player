@@ -310,6 +310,7 @@ class YouTubePlayer extends EventEmitter {
     const opts = this._opts
 
     this._player = new this._api.Player(this._id, {
+      host: opts.host,
       width: opts.width,
       height: opts.height,
       videoId: videoId,
