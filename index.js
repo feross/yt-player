@@ -66,7 +66,8 @@ class YouTubePlayer extends EventEmitter {
       modestBranding: false,
       related: true,
       timeupdateFrequency: 1000,
-      playsInline: true
+      playsInline: true,
+      start: undefined
     }, opts)
 
     this.videoId = null
@@ -97,15 +98,16 @@ class YouTubePlayer extends EventEmitter {
 
       // If load(videoId, [autoplay]) was called before Iframe API loaded, ensure it gets
       // called again now
-      if (this.videoId) this.load(this.videoId, this._autoplay)
+      if (this.videoId) this.load(this.videoId, this._autoplay, this._start)
     })
   }
 
-  load (videoId, autoplay = false) {
+  load (videoId, autoplay = false, start) {
     if (this.destroyed) return
 
     this.videoId = videoId
     this._autoplay = autoplay
+    this._start = start
 
     // If the Iframe API is not ready yet, do nothing. Once the Iframe API is
     // ready, `load(this.videoId)` will be called.
@@ -124,9 +126,9 @@ class YouTubePlayer extends EventEmitter {
 
     // If the player instance is ready, load the given `videoId`.
     if (autoplay) {
-      this._player.loadVideoById(videoId)
+      this._player.loadVideoById(videoId, start)
     } else {
-      this._player.cueVideoById(videoId)
+      this._player.cueVideoById(videoId, start)
     }
   }
 
@@ -406,7 +408,14 @@ class YouTubePlayer extends EventEmitter {
 
         // (Not part of documented API) Allow html elements with higher z-index
         // to be shown on top of the YouTube player.
-        wmode: 'opaque'
+        wmode: 'opaque',
+
+        // This parameter causes the player to begin playing the video at the given number
+        // of seconds from the start of the video. The parameter value is a positive integer.
+        // Note that similar to the seek function, the player will look for the closest
+        // keyframe to the time you specify. This means that sometimes the play head may seek
+        // to just before the requested time, usually no more than around two seconds.
+        start: opts.start
       },
       events: {
         onReady: () => this._onReady(videoId),
@@ -439,7 +448,7 @@ class YouTubePlayer extends EventEmitter {
     //   3. `load(videoId, [autoplay])` was called multiple times before the player
     //      was ready. Therefore, the player was initialized with the wrong videoId,
     //      so load the latest videoId and potentially autoplay it.
-    this.load(this.videoId, this._autoplay)
+    this.load(this.videoId, this._autoplay, this._start)
 
     this._flushQueue()
   }
