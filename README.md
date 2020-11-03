@@ -149,6 +149,10 @@ Note that the player will look for the closest keyframe to the time you specify.
 This means that sometimes the play head may seek to just before the requested time,
 usually no more than around two seconds.
 
+#### `opts.host` (string)
+
+This parameter controls the hostname that videos are loaded from. Set to `'https://www.youtube-nocookie.com'` for enhanced privacy. The default value is `'https://youtube.com'`.
+
 ### `player.load(videoId, [autoplay, start])`
 
 This function loads the specified `videoId`. An example of a `videoId` is
