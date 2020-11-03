@@ -1,3 +1,4 @@
+/*! yt-player. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 const EventEmitter = require('events').EventEmitter
 const loadScript = require('load-script2')
 
