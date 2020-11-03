@@ -289,6 +289,18 @@ class YouTubePlayer extends EventEmitter {
           loadCb(null, window.YT)
         }
       }
+    } else {
+      // if a youtube iframe ready event handler is already declared,
+      // don't overwrite it. Declare our own and forward the ready call.
+      const previous = window.onYouTubeIframeAPIReady
+      window.onYouTubeIframeAPIReady = () => {
+        if (previous) {
+          previous()
+        }
+
+        const loadCb = loadIframeAPICallbacks.shift()
+        loadCb(null, window.YT)
+      }
     }
   }
 
