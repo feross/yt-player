@@ -67,7 +67,7 @@ class YouTubePlayer extends EventEmitter {
       related: true,
       timeupdateFrequency: 1000,
       playsInline: true,
-      start: undefined
+      start: 0
     }, opts)
 
     this.videoId = null
@@ -96,8 +96,8 @@ class YouTubePlayer extends EventEmitter {
       if (err) return this._destroy(new Error('YouTube Iframe API failed to load'))
       this._api = api
 
-      // If load(videoId, [autoplay]) was called before Iframe API loaded, ensure it gets
-      // called again now
+      // If load(videoId, [autoplay, [size]]) was called before Iframe API
+      // loaded, ensure it gets called again now
       if (this.videoId) this.load(this.videoId, this._autoplay, this._start)
     })
   }
@@ -301,10 +301,15 @@ class YouTubePlayer extends EventEmitter {
     const opts = this._opts
 
     this._player = new this._api.Player(this._id, {
-      host: opts.host,
       width: opts.width,
       height: opts.height,
       videoId: videoId,
+
+      // (Not part of documented API) This parameter controls the hostname that
+      // videos are loaded from. Set to `'https://www.youtube-nocookie.com'`
+      // for enhanced privacy.
+      host: opts.host,
+
       playerVars: {
         // This parameter specifies whether the initial video will automatically
         // start to play when the player loads. Supported values are 0 or 1. The
@@ -425,8 +430,8 @@ class YouTubePlayer extends EventEmitter {
 
     this._ready = true
 
-    // Once the player is ready, always call `load(videoId, [autoplay])` to handle
-    // these possible cases:
+    // Once the player is ready, always call `load(videoId, [autoplay, [size]])`
+    // to handle these possible cases:
     //
     //   1. `load(videoId, true)` was called before the player was ready. Ensure that
     //      the selected video starts to play.

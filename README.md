@@ -139,7 +139,7 @@ for additional documentation about these parameters.
 
 #### `opts.playsInline` (boolean)
 
-This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS. The default value is `true`.
+This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS. Default is `true`.
 
 #### `opts.start` (number)
 
@@ -147,13 +147,13 @@ This parameter causes the player to begin playing the video at the given number
 of seconds from the start of the video. The parameter value is a positive integer.
 Note that the player will look for the closest keyframe to the time you specify.
 This means that sometimes the play head may seek to just before the requested time,
-usually no more than around two seconds.
+usually no more than around two seconds. Default is `0`.
 
 #### `opts.host` (string)
 
 This parameter controls the hostname that videos are loaded from. Set to `'https://www.youtube-nocookie.com'` for enhanced privacy. The default value is `'https://youtube.com'`.
 
-### `player.load(videoId, [autoplay, start])`
+### `player.load(videoId, [autoplay, [start]])`
 
 This function loads the specified `videoId`. An example of a `videoId` is
 `'GKSRyLdjsPA'`.
