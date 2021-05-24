@@ -112,8 +112,6 @@ class YouTubePlayer extends EventEmitter {
   load (videoKey, autoplay = false, start = 0) {
     const isUrl = this._isUrl(videoKey)
     const videoId = isUrl ? this._getIdFromUrl(videoKey) : videoKey
-
-    console.log(isUrl, videoId)
     if (this.destroyed) return
 
     this.videoKey = videoKey
@@ -543,7 +541,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _isUrl (key) {
-    if (key.includes('youtube.com')) {
+    if (key.includes('youtube.com') || key.includes('youtu.be')) {
       return true
     }
     return false
