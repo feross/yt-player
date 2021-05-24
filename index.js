@@ -103,10 +103,19 @@ class YouTubePlayer extends EventEmitter {
     })
   }
 
-  load (videoId, autoplay = false, start = 0) {
+  /**
+   * @param {string} videokey Can be an Id or Url Video
+   * @param {boolean} autoplay set true if you want play the video on load
+   * @param {number} start timecode to start the video
+   * @returns
+   */
+  load (videoKey, autoplay = false, start = 0) {
+    const isUrl = this._isUrl(videoKey)
+    const videoId = isUrl ? this._getIdFromUrl(videoKey) : videoKey
+
     if (this.destroyed) return
 
-    this.videoId = videoId
+    this.videoKey = videoKey
     this._autoplay = autoplay
     this._start = start
 
@@ -119,7 +128,6 @@ class YouTubePlayer extends EventEmitter {
       this._createPlayer(videoId)
       return
     }
-
     // If the player instance is not ready yet, do nothing. Once the player
     // instance is ready, `load(this.videoId)` will be called. This ensures that
     // the last call to `load()` is the one that takes effect.
@@ -531,6 +539,19 @@ class YouTubePlayer extends EventEmitter {
   _stopInterval () {
     clearInterval(this._interval)
     this._interval = null
+  }
+
+  _isUrl (key) {
+    if (key.includes('youtube.com')) {
+      return true
+    }
+    return false
+  }
+
+  _getIdFromUrl (videoUrl) {
+    const getEntireIdQueryRegex = /(v)([=])([\w\d_-]+)([?&])?/g
+    const cleanQueryRulesRegex = /(?:v=|&)/g
+    return videoUrl.match(getEntireIdQueryRegex)[0].replace(cleanQueryRulesRegex, '')
   }
 }
 
