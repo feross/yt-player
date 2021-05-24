@@ -111,14 +111,13 @@ class YouTubePlayer extends EventEmitter {
    */
   load (videoKey, autoplay = false, start = 0) {
     const isUrl = this._isUrl(videoKey)
-    this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
-    const videoId = this.videoKey;
-
+  
     if (this.destroyed) return
-
-    this.videoKey = videoKey
+    
+    this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
     this._autoplay = autoplay
     this._start = start
+    const videoId = this.videoKey
 
     // If the Iframe API is not ready yet, do nothing. Once the Iframe API is
     // ready, `load(this.videoId)` will be called.
@@ -550,7 +549,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _getIdFromUrl (videoUrl) {
-    const getEntireIdQueryRegex = /(v)([\=])([\w\d_-]+)([\?\&])?/g
+    const getEntireIdQueryRegex = /(v)([=])([\w\d_-]+)([?&])?/g
     const cleanQueryRulesRegex = /(?:v=|&)/g
     return videoUrl.match(getEntireIdQueryRegex)[0].replace(cleanQueryRulesRegex, '')
   }
