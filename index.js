@@ -71,7 +71,7 @@ class YouTubePlayer extends EventEmitter {
       start: 0
     }, opts)
 
-    this.videoId = null
+    this.videoKey = null
     this.destroyed = false
 
     this._api = null
@@ -99,7 +99,7 @@ class YouTubePlayer extends EventEmitter {
 
       // If load(videoId, [autoplay, [size]]) was called before Iframe API
       // loaded, ensure it gets called again now
-      if (this.videoId) this.load(this.videoId, this._autoplay, this._start)
+      if (this.videoKey) this.load(this.videoKey, this._autoplay, this._start)
     })
   }
 
@@ -111,7 +111,9 @@ class YouTubePlayer extends EventEmitter {
    */
   load (videoKey, autoplay = false, start = 0) {
     const isUrl = this._isUrl(videoKey)
-    const videoId = isUrl ? this._getIdFromUrl(videoKey) : videoKey
+    this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
+    const videoId = this.videoKey;
+    
     if (this.destroyed) return
 
     this.videoKey = videoKey
@@ -235,7 +237,7 @@ class YouTubePlayer extends EventEmitter {
       this._player.destroy()
     }
 
-    this.videoId = null
+    this.videoKey = null
 
     this._id = null
     this._opts = null
@@ -450,7 +452,7 @@ class YouTubePlayer extends EventEmitter {
     //   3. `load(videoId, [autoplay])` was called multiple times before the player
     //      was ready. Therefore, the player was initialized with the wrong videoId,
     //      so load the latest videoId and potentially autoplay it.
-    this.load(this.videoId, this._autoplay, this._start)
+    this.load(this.videoKey, this._autoplay, this._start)
 
     this._flushQueue()
   }
@@ -516,7 +518,7 @@ class YouTubePlayer extends EventEmitter {
         code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
         code === YOUTUBE_ERROR.NOT_FOUND ||
         code === YOUTUBE_ERROR.INVALID_PARAM) {
-      return this.emit('unplayable', this.videoId)
+      return this.emit('unplayable', this.videoKey)
     }
 
     // Unexpected error, does not match any known type
