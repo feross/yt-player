@@ -113,6 +113,7 @@ class YouTubePlayer extends EventEmitter {
     const isUrl = this._isUrl(videoKey)
     const videoId = isUrl ? this._getIdFromUrl(videoKey) : videoKey
 
+    console.log(isUrl, videoId)
     if (this.destroyed) return
 
     this.videoKey = videoKey
