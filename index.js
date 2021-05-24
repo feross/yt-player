@@ -549,7 +549,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _getIdFromUrl (videoUrl) {
-    const getEntireIdQueryRegex = /(v)([=])([\w\d_-]+)([?&])?/g
+    const getEntireIdQueryRegex = /(v)([\=])([\w\d_-]+)([\?\&])?/g
     const cleanQueryRulesRegex = /(?:v=|&)/g
     return videoUrl.match(getEntireIdQueryRegex)[0].replace(cleanQueryRulesRegex, '')
   }
