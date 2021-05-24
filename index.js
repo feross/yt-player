@@ -71,7 +71,7 @@ class YouTubePlayer extends EventEmitter {
       start: 0
     }, opts)
 
-    this.videoId = null
+    this.videoKey = null
     this.destroyed = false
 
     this._api = null
@@ -99,16 +99,25 @@ class YouTubePlayer extends EventEmitter {
 
       // If load(videoId, [autoplay, [size]]) was called before Iframe API
       // loaded, ensure it gets called again now
-      if (this.videoId) this.load(this.videoId, this._autoplay, this._start)
+      if (this.videoKey) this.load(this.videoKey, this._autoplay, this._start)
     })
   }
 
-  load (videoId, autoplay = false, start = 0) {
+  /**
+   * @param {string} videokey Can be an Id or Url Video
+   * @param {boolean} autoplay set true if you want play the video on load
+   * @param {number} start timecode to start the video
+   * @returns
+   */
+  load (videoKey, autoplay = false, start = 0) {
+    const isUrl = this._isUrl(videoKey)
+
     if (this.destroyed) return
 
-    this.videoId = videoId
+    this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
     this._autoplay = autoplay
     this._start = start
+    const videoId = this.videoKey
 
     // If the Iframe API is not ready yet, do nothing. Once the Iframe API is
     // ready, `load(this.videoId)` will be called.
@@ -119,7 +128,6 @@ class YouTubePlayer extends EventEmitter {
       this._createPlayer(videoId)
       return
     }
-
     // If the player instance is not ready yet, do nothing. Once the player
     // instance is ready, `load(this.videoId)` will be called. This ensures that
     // the last call to `load()` is the one that takes effect.
@@ -228,7 +236,7 @@ class YouTubePlayer extends EventEmitter {
       this._player.destroy()
     }
 
-    this.videoId = null
+    this.videoKey = null
 
     this._id = null
     this._opts = null
@@ -443,7 +451,7 @@ class YouTubePlayer extends EventEmitter {
     //   3. `load(videoId, [autoplay])` was called multiple times before the player
     //      was ready. Therefore, the player was initialized with the wrong videoId,
     //      so load the latest videoId and potentially autoplay it.
-    this.load(this.videoId, this._autoplay, this._start)
+    this.load(this.videoKey, this._autoplay, this._start)
 
     this._flushQueue()
   }
@@ -509,7 +517,7 @@ class YouTubePlayer extends EventEmitter {
         code === YOUTUBE_ERROR.UNPLAYABLE_2 ||
         code === YOUTUBE_ERROR.NOT_FOUND ||
         code === YOUTUBE_ERROR.INVALID_PARAM) {
-      return this.emit('unplayable', this.videoId)
+      return this.emit('unplayable', this.videoKey)
     }
 
     // Unexpected error, does not match any known type
@@ -531,6 +539,19 @@ class YouTubePlayer extends EventEmitter {
   _stopInterval () {
     clearInterval(this._interval)
     this._interval = null
+  }
+
+  _isUrl (key) {
+    if (key && (key.includes('youtube.com') || key.includes('youtu.be'))) {
+      return true
+    }
+    return false
+  }
+
+  _getIdFromUrl (videoUrl) {
+    const getEntireIdQueryRegex = /(v)([=])([\w\d_-]+)([?&])?/g
+    const cleanQueryRulesRegex = /(?:v=|&)/g
+    return videoUrl.match(getEntireIdQueryRegex)[0].replace(cleanQueryRulesRegex, '')
   }
 }
 
