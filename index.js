@@ -111,9 +111,9 @@ class YouTubePlayer extends EventEmitter {
    */
   load (videoKey, autoplay = false, start = 0) {
     const isUrl = this._isUrl(videoKey)
-  
+
     if (this.destroyed) return
-    
+
     this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
     this._autoplay = autoplay
     this._start = start
