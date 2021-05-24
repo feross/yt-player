@@ -543,7 +543,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _isUrl (key) {
-    if (key  && (key.includes('youtube.com') || key.includes('youtu.be'))) {
+    if (key && (key.includes('youtube.com') || key.includes('youtu.be'))) {
       return true
     }
     return false
