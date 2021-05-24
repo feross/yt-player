@@ -113,7 +113,7 @@ class YouTubePlayer extends EventEmitter {
     const isUrl = this._isUrl(videoKey)
     this.videoKey = isUrl ? this._getIdFromUrl(videoKey) : videoKey
     const videoId = this.videoKey;
-    
+
     if (this.destroyed) return
 
     this.videoKey = videoKey
@@ -543,7 +543,7 @@ class YouTubePlayer extends EventEmitter {
   }
 
   _isUrl (key) {
-    if (key.includes('youtube.com') || key.includes('youtu.be')) {
+    if (key  && (key.includes('youtube.com') || key.includes('youtu.be'))) {
       return true
     }
     return false
