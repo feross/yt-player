@@ -45,15 +45,9 @@ class YouTubePlayer extends EventEmitter {
   constructor (element, opts) {
     super()
 
-    const elem = typeof element === 'string'
+    this._elem = typeof element === 'string'
       ? document.querySelector(element)
       : element
-
-    if (elem.id) {
-      this._id = elem.id // use existing element id
-    } else {
-      this._id = elem.id = 'ytplayer-' + Math.random().toString(16).slice(2, 8)
-    }
 
     this._opts = Object.assign({
       width: 640,
@@ -230,7 +224,7 @@ class YouTubePlayer extends EventEmitter {
 
     this.videoId = null
 
-    this._id = null
+    this._elem = null
     this._opts = null
     this._api = null
     this._player = null
@@ -301,7 +295,7 @@ class YouTubePlayer extends EventEmitter {
 
     const opts = this._opts
 
-    this._player = new this._api.Player(this._id, {
+    this._player = new this._api.Player(this._elem, {
       width: opts.width,
       height: opts.height,
       videoId: videoId,
