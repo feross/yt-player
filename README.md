@@ -1,35 +1,6 @@
-# yt-player [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
+# y2be-player 
 
-[travis-image]: https://img.shields.io/travis/feross/yt-player/master.svg
-[travis-url]: https://travis-ci.org/feross/yt-player
-[npm-image]: https://img.shields.io/npm/v/yt-player.svg
-[npm-url]: https://npmjs.org/package/yt-player
-[downloads-image]: https://img.shields.io/npm/dm/yt-player.svg
-[downloads-url]: https://npmjs.org/package/yt-player
-[standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
-[standard-url]: https://standardjs.com
-
-### Simple, robust, blazing-fast YouTube Player API
-
-This package is used on [Play.cash](https://play.cash).
-
-## Install
-
-```
-npm install yt-player
-```
-
-If you do not use a bundler, you can use the [standalone script](https://bundle.run/yt-player) directly in a `<script>` tag.
-
-## Why this package?
-
-Most of the existing YouTube API packages on npm are incomplete or overcomplicated.
-
-Note: It is irresponsible to publish a package that requires all of
-`babel-runtime`, `lodash`, and 20KB of other nonsense to do a simple task. Using
-fancy dependencies doesn't make you a better programmer, and it's certainly not a
-"best practice" to ship tons of extra code to your website visitors. Less is more.
-🔥
+### Simple YouTube Player
 
 ## Features
 
