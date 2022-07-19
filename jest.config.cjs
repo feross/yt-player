@@ -1,7 +1,6 @@
-module.exports = {
-  "name": "y2be-player",
-  "jest": {
-    "verbose": true,
-    "testEnvironment": "jsdom"
-  }
+const jestConfig = {
+  verbose: true,
+  testMatch: ['**/tests/*.test.js'],
 }
+
+module.exports = jestConfig
