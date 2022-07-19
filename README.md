@@ -1,34 +1,34 @@
-# y2be-player 
+# y2be-player
 
 ### Simple YouTube Player
 
 ## Features
 
-  - Powered by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
-  - Lightweight - only 3.14kb gzipped and minified!
-  - Extremely fast time-to-first-frame
-    - YouTube IFrame API `<script>` is automatically loaded on first use
-    - For even faster start time, add `<script src='https://www.youtube.com/iframe_api' async></script>` to your page
-    - Automatically detects the presence of the API `<script>` so API is never loaded twice
-  - API commands are automatically queued (until both the Iframe API and Player instance are ready)
-  - Differentiate between *fatal* errors and *unplayable video* errors
-  - Adds the all-important 'timeupdate' event, which the YouTube API lacks
-  - Well-commented codebase makes it easy to understand what's going on
-  - No large dependencies or unused code
-  - Note: no support for old browsers (e.g. IE11 and below)
+- Powered by the [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
+- Lightweight - only 3.14kb gzipped and minified!
+- Extremely fast time-to-first-frame
+  - YouTube IFrame API `<script>` is automatically loaded on first use
+  - For even faster start time, add `<script src='https://www.youtube.com/iframe_api' async></script>` to your page
+  - Automatically detects the presence of the API `<script>` so API is never loaded twice
+- API commands are automatically queued (until both the Iframe API and Player instance are ready)
+- Differentiate between _fatal_ errors and _unplayable video_ errors
+- Adds the all-important 'timeupdate' event, which the YouTube API lacks
+- Well-commented codebase makes it easy to understand what's going on
+- No large dependencies or unused code
+- Note: no support for old browsers (e.g. IE11 and below)
 
 ## Usage
 
 ```js
-const YTPlayer = require('yt-player')
-const player = new YTPlayer('#player')
+const YTPlayer = require("yt-player");
+const player = new YTPlayer("#player");
 
-player.load('GKSRyLdjsPA')
-player.setVolume(100)
+player.load("GKSRyLdjsPA");
+player.setVolume(100);
 
-player.on('playing', () => {
-  console.log(player.getDuration()) // => 351.521
-})
+player.on("playing", () => {
+  console.log(player.getDuration()); // => 351.521
+});
 ```
 
 ## API
@@ -275,10 +275,15 @@ This event fires when the time indicated by the `getCurrentTime()` method has be
 updated.
 
 ### `player.on('unstarted', () => {})`
+
 ### `player.on('ended', () => {})`
+
 ### `player.on('playing', () => {})`
+
 ### `player.on('paused', () => {})`
+
 ### `player.on('buffering', () => {})`
+
 ### `player.on('cued', () => {})`
 
 These events fire when the player enters the respective state. These event names

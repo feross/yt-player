@@ -14,6 +14,11 @@
     "load-script2": "^2.0.1"
   },
   "devDependencies": {
+    "eslint": "^8.20.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "rollup": "^2.77.0",
     "standard": "*"
   },
   "homepage": "https://github.com/feross/yt-player",
@@ -32,11 +37,14 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git://github.com/feross/yt-player.git"
   },
   "scripts": {
+    "prepare": "husky install",
+    "build": "rollup -c rollup.config.js",
     "test": "standard"
   },
   "funding": [
@@ -52,5 +60,8 @@
       "type": "consulting",
       "url": "https://feross.org/support"
     }
-  ]
+  ],
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
 }
