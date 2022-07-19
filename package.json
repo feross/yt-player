@@ -2,11 +2,17 @@
   "name": "yt-player",
   "description": "Simple, robust YouTube Iframe Player API",
   "version": "3.5.0",
-  "author": {
-    "name": "Feross Aboukhadijeh",
-    "email": "feross@feross.org",
-    "url": "https://feross.org"
-  },
+  "authors": [
+    {
+      "name": "Feross Aboukhadijeh",
+      "email": "feross@feross.org",
+      "url": "https://feross.org"
+    },
+    {
+      "name": "Daniil Polovinkin",
+      "email": "dolovinkin@gmail.com"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/feross/yt-player/issues"
   },
@@ -14,12 +20,17 @@
     "load-script2": "^2.0.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-react": "^7.18.6",
+    "babel-jest": "^28.1.3",
     "eslint": "^8.20.0",
     "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "rollup": "^2.77.0",
-    "standard": "*"
+    "react-test-renderer": "^18.2.0",
+    "rollup": "^2.77.0"
   },
   "homepage": "https://github.com/feross/yt-player",
   "keywords": [
@@ -45,7 +56,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "rollup -c rollup.config.js",
-    "test": "standard"
+    "test": "jest"
   },
   "funding": [
     {
