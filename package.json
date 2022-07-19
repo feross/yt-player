@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.18.9",
-    "@babel/preset-react": "^7.18.6",
     "babel-jest": "^28.1.3",
     "eslint": "^8.20.0",
     "husky": "^8.0.1",
@@ -48,7 +47,7 @@
     "youtube embed"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/y2be-player.js",
   "type": "module",
   "repository": {
     "type": "git",

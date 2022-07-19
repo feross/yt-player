@@ -221,8 +221,8 @@ class YouTubePlayer extends EventEmitter {
     return (this._ready && this._player.getCurrentTime()) || 0;
   }
 
-  getVideoInfo() {
-    //const frame = this._player.getIframe();
+  getVideoName() {
+    return document.querySelector(`#${this._id}`).title;
   }
 
   destroy() {

@@ -8,6 +8,7 @@ const TEST_VIDEO_ID = "dQw4w9WgXcQ";
 test("attaches to a DOM node", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   expect(player.getState()).toBe("unstarted");
 });
@@ -15,6 +16,7 @@ test("attaches to a DOM node", () => {
 test("loads video", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.on("ready", () => {
     expect(player.videoId).toBe(TEST_VIDEO_ID);
@@ -26,6 +28,7 @@ test("loads video", () => {
 test("adds play command to the queue", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.load(TEST_VIDEO_ID);
   player.play();
@@ -35,6 +38,7 @@ test("adds play command to the queue", () => {
 test("adds pause command to the queue", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.load(TEST_VIDEO_ID);
   player.pause();
@@ -44,6 +48,7 @@ test("adds pause command to the queue", () => {
 test("adds stop command to the queue", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.load(TEST_VIDEO_ID);
   player.stop();
@@ -53,6 +58,7 @@ test("adds stop command to the queue", () => {
 test("loads YouTube iframe API", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.on("ready", () => {
     expect(typeof player._api).toBe("object");
@@ -63,6 +69,7 @@ test("loads YouTube iframe API", () => {
 test("handles state change", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   const unstartedHandler = jest.fn(() => {
     /* noop */
@@ -79,6 +86,7 @@ test("handles state change", () => {
 test("creates player", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
   player.on("ready", () => {
     player._createPlayer(TEST_VIDEO_ID);
@@ -86,14 +94,14 @@ test("creates player", () => {
   });
 });
 
-test("_onReady fires", () => {
+/*
+test("gets video info", () => {
   const div = document.createElement("div");
   div.setAttribute("id", "player");
+  document.body.appendChild(div);
   const player = new YouTubePlayer(div);
-  const onReadyMock = jest.fn();
-  player._onReady = onReadyMock;
   player.load(TEST_VIDEO_ID);
-  player.on("ready", () => {
-    expect(onReadyMock).toBeCalled();
-  });
+  expect(player.getState()).toBe('unstarted');
+  expect(player.getVideoName()).toBe({ name: "Rick Astley" });
 });
+*/
