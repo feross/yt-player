@@ -1,4 +1,5 @@
 {
   "src/*.js": ["prettier --write", "eslint -c .eslintrc.json --fix"],
+  "tests/*.js": ["prettier --write"],
   "*": "yarn test"
 }

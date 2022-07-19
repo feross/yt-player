@@ -56,7 +56,8 @@
   "scripts": {
     "prepare": "husky install",
     "build": "rollup -c rollup.config.js",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --collect-coverage"
   },
   "funding": [
     {
