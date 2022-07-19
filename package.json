@@ -1,7 +1,7 @@
 {
-  "name": "yt-player",
+  "name": "y2be-player",
   "description": "Simple, robust YouTube Iframe Player API",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "authors": [
     {
       "name": "Feross Aboukhadijeh",
@@ -14,7 +14,7 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/feross/yt-player/issues"
+    "url": "https://github.com/Niades/y2be-player/issues"
   },
   "dependencies": {
     "load-script2": "^2.0.1"
@@ -33,7 +33,7 @@
     "rollup": "^2.77.0",
     "rollup-plugin-terser": "^7.0.2"
   },
-  "homepage": "https://github.com/feross/yt-player",
+  "homepage": "https://github.com/Niades/y2be-player",
   "keywords": [
     "youtube",
     "youtube player",
@@ -52,7 +52,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git://github.com/feross/yt-player.git"
+    "url": "git://github.com/Niades/y2be-player.git"
   },
   "scripts": {
     "prepare": "husky install",
@@ -73,8 +73,5 @@
       "type": "consulting",
       "url": "https://feross.org/support"
     }
-  ],
-  "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
-  }
+  ]
 }
