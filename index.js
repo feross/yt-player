@@ -496,7 +496,7 @@ class YouTubePlayer extends EventEmitter {
   _onError (data) {
     if (this.destroyed) return
 
-    const code = data.data
+    const code = Number(data.data)
 
     // The HTML5_ERROR error occurs when the YouTube player needs to switch from
     // HTML5 to Flash to show an ad. Ignore it.
