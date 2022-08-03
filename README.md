@@ -1,7 +1,7 @@
-# yt-player [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
+# yt-player [![ci][ci-image]][ci-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
 
-[travis-image]: https://img.shields.io/travis/feross/yt-player/master.svg
-[travis-url]: https://travis-ci.org/feross/yt-player
+[ci-image]: https://img.shields.io/github/workflow/status/feross/yt-player/ci/master
+[ci-url]: https://github.com/feross/yt-player/actions
 [npm-image]: https://img.shields.io/npm/v/yt-player.svg
 [npm-url]: https://npmjs.org/package/yt-player
 [downloads-image]: https://img.shields.io/npm/dm/yt-player.svg
